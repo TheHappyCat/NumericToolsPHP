@@ -1,0 +1,9 @@
+Generador de números primos
+tener sitio web con los números
+tener repo en github
+versión inicial en php
+tener versiones en otros lenguajes
+tener documentación básica
+tener pruebas unitarias
+tener integración contínua
+usar el viejo projecto de php para generar todas las combinaciones
