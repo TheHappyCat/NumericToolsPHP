@@ -16,17 +16,19 @@ class IntegerTest extends TestCase
     {
         $this->assertNotTrue(NumberValidations::stringIsInteger(''));
 
+        $this->assertNotTrue(NumberValidations::stringIsInteger('-0123'));
+
+        $this->assertNotTrue(NumberValidations::stringIsInteger('-0'));
+
         $this->assertNotTrue(NumberValidations::stringIsInteger('0123'));
 
         $this->assertTrue(NumberValidations::stringIsInteger('-2048'));
 
-        $this->assertNotTrue(NumberValidations::stringIsInteger('-0123'));
-
-        $this->assertTrue(NumberValidations::stringIsInteger('21'));
-
-        $this->assertTrue(NumberValidations::stringIsInteger('4'));
-
         $this->assertTrue(NumberValidations::stringIsInteger('0'));
+
+        $this->assertTrue(NumberValidations::stringIsInteger('1'));
+
+        $this->assertTrue(NumberValidations::stringIsInteger('1980'));
     }
 
     public function testCreateDefault()
@@ -43,15 +45,43 @@ class IntegerTest extends TestCase
 
     public function testCreateByString()
     {
+        $number = Integer::createByString('-274');
+        $this->assertNotNull($number);
+
+        $number = Integer::createByString('0');
+        $this->assertNotNull($number);
+
         $number = Integer::createByString('123456789');
         $this->assertNotNull($number);
     }
 
     public function testPrint()
     {
+        /*
+         * Test creating by int with negative, zero and positive integers.
+         */
+
+        $number = Integer::createByInt(-274);
+        $this->assertEquals('-274', strval($number));
+
+        $number = Integer::createByInt(0);
+        $this->assertEquals('0', strval($number));
+
         $number = Integer::createByInt(123);
-        $stringNumber = strval($number);
-        $this->assertEquals('123', $stringNumber);
+        $this->assertEquals('123', strval($number));
+
+        /*
+         * Test creating by string with negative, zero and positive integers.
+         */
+
+        $number = Integer::createByString('-274');
+        $this->assertEquals('-274', strval($number));
+
+        $number = Integer::createByString('0');
+        $this->assertEquals('0', strval($number));
+
+        $number = Integer::createByString('123');
+        $this->assertEquals('123', strval($number));
     }
 
     public function testMultiplyByInt()
@@ -149,5 +179,28 @@ class IntegerTest extends TestCase
         $b = Integer::createByString('2');
         $c = $a->multiplyBy($b)->multiplyBy($b)->multiplyBy($b)->multiplyBy($b)->multiplyBy($b)->multiplyBy($b)->multiplyBy($b);
         $this->assertEquals('256', strval($c));
+    }
+
+    public function testGreaterThan()
+    {
+        $a = Integer::createByString('1');
+        $b = Integer::createByString('123');
+        $this->assertFalse($a->greaterThan($b));
+
+        $a = Integer::createByString('123');
+        $b = Integer::createByString('1');
+        $this->assertTrue($a->greaterThan($b));
+
+        $a = Integer::createByString('123');
+        $b = Integer::createByString('123');
+        $this->assertFalse($a->greaterThan($b));
+
+        $a = Integer::createByString('123');
+        $b = Integer::createByString('456');
+        $this->assertFalse($a->greaterThan($b));
+
+        $a = Integer::createByString('456');
+        $b = Integer::createByString('123');
+        $this->assertTrue($a->greaterThan($b));
     }
 }

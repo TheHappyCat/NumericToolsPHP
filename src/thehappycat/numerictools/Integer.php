@@ -9,9 +9,14 @@ use Exception;
 class Integer
 {
     /**
-     * @var null
+     * @var array
      */
-    private $value = null;
+    private $value = [];
+
+    /**
+     * @var bool
+     */
+    private $negative = false;
 
     /**
      * @param int $value
@@ -28,6 +33,12 @@ class Integer
      */
     public function setIntValue(int $value)
     {
+        if ($value < 0) {
+            $this->negative = true;
+
+            $value = abs($value);
+        }
+
         $this->value = array_map('intval', str_split($value));
     }
 
@@ -50,7 +61,25 @@ class Integer
             throw new Exception('The given value is not a valid number');
         }
 
+        $parts = str_split($value);
+
+        if ($parts[0] === '-') {
+            $this->negative = true;
+
+            array_shift($parts);
+
+            $value = implode('', $parts);
+        }
+
         $this->value = array_map('intval', str_split($value));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNegative()
+    {
+        return $this->negative;
     }
 
     /**
@@ -58,7 +87,7 @@ class Integer
      */
     public function __toString()
     {
-        return implode('', $this->value);
+        return ($this->isNegative() ? '-' : '') . implode('', $this->value);
     }
 
     /**
@@ -113,11 +142,45 @@ class Integer
     }
 
     /**
+     * @param int $number
+     * @return bool
+     */
+    public function greaterThan(Integer $number)
+    {
+        $result = false;
+
+        if (!empty($number)) {
+            $comparison = sizeof($this->value) <=> sizeof($number->value);
+
+            if ($comparison === 0) {
+                foreach ($this->value as $index => $currentDigit) {
+                    if ($currentDigit > $number->value[$index]) {
+                        $result = true;
+                        break;
+                    }
+                }
+            }
+            else {
+                $result = $comparison === 1;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * @param Integer $number
      * @return Integer
      */
     public function subtract(Integer $number)
     {
+        $thisGreater = $this->greaterThan($number);
+
+        $top = $thisGreater ? $this : $number;
+        $bottom = $thisGreater ? $number : $this;
+
+
+
         return $this;
     }
 
@@ -155,6 +218,10 @@ class Integer
      */
     public function multiplyByInt(int $number)
     {
+        if ($number < 0 || $number > 9) {
+            throw new Exception('The number can not be lower than 0 or greater than 9');
+        }
+
         $stringHolder = '';
 
         $carry = 0;

@@ -38,7 +38,7 @@ class NumberValidations
 
             // If, after getting rid of the minus, the length of the string is bigger than 1, the first digit can't be a 0.
 
-            if (sizeof($chars) > 1 && $chars[0] === '0') {
+            if (sizeof($chars) >= 1 && $chars[0] === '0') {
                 return false;
             }
         }
