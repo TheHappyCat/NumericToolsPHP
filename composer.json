@@ -1,10 +1,4 @@
 {
-    "authors": [
-        {
-            "name": "Jean Paul Ruiz",
-            "email": "jpruiz114@gmail.com"
-        }
-    ],
     "name": "thehappycat/numerictools",
     "description": "PHP project with numeric analysis tools",
     "require": {
@@ -13,5 +7,11 @@
     "require-dev": {
         "phpunit/phpunit": "^6.4"
     },
+    "authors": [
+        {
+            "name": "Jean Paul Ruiz",
+            "email": "jpruiz114@gmail.com"
+        }
+    ],
     "type": "project"
 }
