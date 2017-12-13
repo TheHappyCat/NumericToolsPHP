@@ -21,5 +21,8 @@ before_script:
     - rm -f composer.lock
     - composer install --prefer-dist --ignore-platform-reqs
 
+script:
+  ./vendor/bin/phpunit tests/
+
 git:
   depth: 5
