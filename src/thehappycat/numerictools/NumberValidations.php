@@ -25,18 +25,18 @@ class NumberValidations
 
         $chars = str_split($string);
 
-        // If the length of the string is bigger than 1, the first digit can't be a zero.
+        // If the length of the string is greater than 1, the first digit can't be a zero.
 
         if (sizeof($chars) > 1 && $chars[0] === '0') {
             return false;
         }
 
-        // If the length of the string is bigger than 1, the first digit can be a minus.
+        // If the length of the string is greater than 1, the first digit can be a minus.
 
         if (sizeof($chars) > 1 && $chars[0] === '-') {
             array_shift($chars);
 
-            // If, after getting rid of the minus, the length of the string is bigger than 1, the first digit can't be a 0.
+            // If, after getting rid of the minus, the length of the string is greater or equal than 1, the first digit can't be a 0.
 
             if (sizeof($chars) >= 1 && $chars[0] === '0') {
                 return false;
