@@ -176,12 +176,42 @@ class Integer
     {
         $thisGreater = $this->greaterThan($number);
 
-        $top = $thisGreater ? $this : $number;
-        $bottom = $thisGreater ? $number : $this;
+        $top = $thisGreater ? $this->value : $number->value;
+        $bottom = $thisGreater ? $number->value : $this->value;
 
+        $indexDiff = sizeof($top) - sizeof($bottom);
 
+        $carry = 0;
 
-        return $this;
+        $stringHolder = '';
+
+        for ($i = sizeof($top) - 1; $i >= 0; $i--) {
+            if (($i - $indexDiff) < 0) {
+                $intResult = $top[$i] - $carry;
+                $carry = 0;
+            }
+            else {
+                $top[$i] = $top[$i] - $carry;
+
+                if ($top[$i] >= $bottom[$i - $indexDiff]) {
+                    $intResult = $top[$i] - $bottom[$i - $indexDiff];
+                    $carry = 0;
+                }
+                else {
+                    $intResult = intval('1' . $top[$i]) - $bottom[$i - $indexDiff];
+                    $carry = 1;
+                }
+            }
+
+            if ($i === 0 && $intResult === 0) {
+                continue;
+            }
+            else {
+                $stringHolder = $intResult . $stringHolder;
+            }
+        }
+
+        return Integer::createByString($stringHolder);
     }
 
     /**

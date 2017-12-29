@@ -203,4 +203,32 @@ class IntegerTest extends TestCase
         $b = Integer::createByString('123');
         $this->assertTrue($a->greaterThan($b));
     }
+
+    public function testSubtract()
+    {
+        $a = Integer::createByString('5');
+        $b = Integer::createByString('3');
+        $c = $a->subtract($b);
+        $this->assertEquals('2', strval($c));
+
+        $a = Integer::createByString('10');
+        $b = Integer::createByString('5');
+        $c = $a->subtract($b);
+        $this->assertEquals('5', strval($c));
+
+        $a = Integer::createByString('12');
+        $b = Integer::createByString('8');
+        $c = $a->subtract($b);
+        $this->assertEquals('4', strval($c));
+
+        $a = Integer::createByString('123');
+        $b = Integer::createByString('4');
+        $c = $a->subtract($b);
+        $this->assertEquals('119', strval($c));
+
+        $a = Integer::createByString('3456');
+        $b = Integer::createByString('1999');
+        $c = $a->subtract($b);
+        $this->assertEquals('1457', strval($c));
+    }
 }
