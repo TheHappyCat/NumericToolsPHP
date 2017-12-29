@@ -230,5 +230,15 @@ class IntegerTest extends TestCase
         $b = Integer::createByString('1999');
         $c = $a->subtract($b);
         $this->assertEquals('1457', strval($c));
+
+        $a = Integer::createByString('728');
+        $b = Integer::createByString('51');
+        $c = $a->subtract($b);
+        $this->assertEquals('677', strval($c));
+
+        $a = Integer::createByString('9000');
+        $b = Integer::createByString('297');
+        $c = $a->subtract($b);
+        $this->assertEquals('8703', strval($c));
     }
 }

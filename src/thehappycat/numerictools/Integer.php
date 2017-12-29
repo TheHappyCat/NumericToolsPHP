@@ -191,11 +191,18 @@ class Integer
                 $carry = 0;
             }
             else {
-                $top[$i] = $top[$i] - $carry;
+                if ($top[$i] - $carry < 0) {
+                    $top[$i] = intval('1' . $top[$i]) - $carry;
+                    $carry = 1;
+                }
+                else {
+                    $top[$i] = $top[$i] - $carry;
+                    $carry = 0;
+                }
 
                 if ($top[$i] >= $bottom[$i - $indexDiff]) {
                     $intResult = $top[$i] - $bottom[$i - $indexDiff];
-                    $carry = 0;
+                    $carry = $intResult === 0 && $carry === 1 ? 1 : $carry;
                 }
                 else {
                     $intResult = intval('1' . $top[$i]) - $bottom[$i - $indexDiff];
