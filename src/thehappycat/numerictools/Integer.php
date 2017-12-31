@@ -99,8 +99,8 @@ class Integer
     }
 
     /**
-     * @param Integer $number
-     * @return Integer
+     * @param \TheHappyCat\NumericTools\Integer $number
+     * @return \TheHappyCat\NumericTools\Integer
      */
     public function add(Integer $number)
     {
@@ -142,7 +142,21 @@ class Integer
     }
 
     /**
-     * @param int $number
+     * @param \TheHappyCat\NumericTools\Integer $number
+     * @return bool
+     */
+    public function greaterOrEqualTo(Integer $number)
+    {
+        if ($this->greaterThan($number)) {
+            return true;
+        }
+        else {
+            return ($this->getStringValue() === $number->getStringValue());
+        }
+    }
+
+    /**
+     * @param \TheHappyCat\NumericTools\Integer $number
      * @return bool
      */
     public function greaterThan(Integer $number)
@@ -169,15 +183,36 @@ class Integer
     }
 
     /**
-     * @param Integer $number
-     * @return Integer
+     * @param \TheHappyCat\NumericTools\Integer $number
+     * @return \TheHappyCat\NumericTools\Integer
      */
     public function subtract(Integer $number)
     {
-        $thisGreater = $this->greaterThan($number);
+        // e.g. -8 - (-4) = -8 + 4 = -4
+        if ($this->isNegative() && $number->isNegative()) {
 
-        $top = $thisGreater ? $this->value : $number->value;
-        $bottom = $thisGreater ? $number->value : $this->value;
+        }
+
+        // e.g. 8 - (-4) = 8 + 4 = 12
+        if (!$this->isNegative() && $number->isNegative()) {
+            $positiveNumber = Integer::createByString(
+                implode('', $number->value)
+            );
+
+            return $this->add($positiveNumber);
+        }
+
+        // e.g. -8 - 4 = -12
+        if ($this->isNegative() && !$number->isNegative()) {
+
+        }
+
+        $thisGreaterOrEqual = $this->greaterOrEqualTo($number);
+
+        $negative = $thisGreaterOrEqual ? false : true;
+
+        $top = $thisGreaterOrEqual ? $this->value : $number->value;
+        $bottom = $thisGreaterOrEqual ? $number->value : $this->value;
 
         $indexDiff = sizeof($top) - sizeof($bottom);
 
@@ -186,44 +221,37 @@ class Integer
         $stringHolder = '';
 
         for ($i = sizeof($top) - 1; $i >= 0; $i--) {
+            $currentTop = $top[$i];
+
             if (($i - $indexDiff) < 0) {
-                $intResult = $top[$i] - $carry;
-                $carry = 0;
+                $intResult = $currentTop - $carry < 0 ? 9 : $currentTop - $carry;
+                $carry = $currentTop - $carry < 0 ? 1 : 0;
             }
             else {
-                if ($top[$i] - $carry < 0) {
-                    $top[$i] = intval('1' . $top[$i]) - $carry;
-                    $carry = 1;
-                }
-                else {
-                    $top[$i] = $top[$i] - $carry;
+                $currentBottom = $bottom[$i - $indexDiff];
+
+                if ($currentTop - $carry >= $currentBottom) {
+                    $intResult = $currentTop - $carry - $currentBottom;
                     $carry = 0;
                 }
-
-                if ($top[$i] >= $bottom[$i - $indexDiff]) {
-                    $intResult = $top[$i] - $bottom[$i - $indexDiff];
-                    $carry = $intResult === 0 && $carry === 1 ? 1 : $carry;
-                }
                 else {
-                    $intResult = intval('1' . $top[$i]) - $bottom[$i - $indexDiff];
+                    $intResult = $currentTop - $carry < 0 ? 9 - $currentBottom : intval('1' . ($currentTop - $carry)) - $currentBottom;
                     $carry = 1;
                 }
             }
 
-            if ($i === 0 && $intResult === 0) {
-                continue;
-            }
-            else {
-                $stringHolder = $intResult . $stringHolder;
-            }
+            $stringHolder = $intResult . $stringHolder;
         }
 
-        return Integer::createByString($stringHolder);
+        return Integer::createByString(
+            $negative ? '-' . $this->purgeZeros($stringHolder) : $this->purgeZeros($stringHolder)
+        );
     }
 
     /**
-     * @param Integer $number
-     * @return Integer
+     * @param \TheHappyCat\NumericTools\Integer $number
+     * @return \TheHappyCat\NumericTools\Integer
+     * @throws Exception
      */
     public function multiplyBy(Integer $number)
     {
@@ -239,7 +267,7 @@ class Integer
 
             $subResult = $top->multiplyByInt($bottom[$i]);
 
-            $subResultWithZeros = $subResult->getStringValue() . str_repeat('0', $delta);
+            $subResultWithZeros = $this->purgeZeros($subResult->getStringValue() . str_repeat('0', $delta));
 
             $result = $result->add(
                 Integer::createByString($subResultWithZeros)
@@ -251,7 +279,8 @@ class Integer
 
     /**
      * @param int $number
-     * @return Integer
+     * @return \TheHappyCat\NumericTools\Integer
+     * @throws Exception
      */
     public function multiplyByInt(int $number)
     {
@@ -286,6 +315,27 @@ class Integer
             $stringHolder = $subResult . $stringHolder;
         }
 
-        return Integer::createByString($stringHolder);
+        return Integer::createByString(
+            $this->purgeZeros($stringHolder)
+        );
+    }
+
+    /**
+     * @param string $numericString
+     * @return string
+     */
+    private function purgeZeros($numericString)
+    {
+        if ($numericString[0] === '0') {
+            for ($i = 0; $i < strlen($numericString) - 1; $i++) {
+                if ($numericString[$i] !== '0') {
+                    break;
+                }
+            }
+
+            $numericString = substr_replace($numericString, '', 0, $i);
+        }
+
+        return $numericString;
     }
 }

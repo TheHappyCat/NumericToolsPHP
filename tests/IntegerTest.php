@@ -84,86 +84,57 @@ class IntegerTest extends TestCase
         $this->assertEquals('123', strval($number));
     }
 
+    public function testAdd()
+    {
+        $baseValue = 9999;
+
+        $a = Integer::createByInt($baseValue);
+
+        for ($i = 0; $i <= $baseValue; $i++) {
+            $this->assertEquals('' . $baseValue + $i, strval($a->add(Integer::createByInt($i))));
+        }
+    }
+
+    public function testSubtract()
+    {
+        $baseValue = 9999;
+
+        $a = Integer::createByInt($baseValue);
+
+        for ($i = 0; $i <= $baseValue; $i++) {
+            $this->assertEquals('' . $baseValue - $i, strval($a->subtract(Integer::createByInt($i))));
+        }
+    }
+
+    public function testSubtractWithNegativeResults()
+    {
+        $baseValue = 9999;
+
+        $a = Integer::createByInt($baseValue);
+
+        for ($i=0; $i<=$baseValue * 2; $i++) {
+            $this->assertEquals('' . $baseValue - $i, strval($a->subtract(Integer::createByInt($i))));
+        }
+    }
+
     public function testMultiplyByInt()
     {
         $number = Integer::createByString('123');
 
         $result = $number->multiplyByInt(4);
 
-        $stringResult = strval($result);
-
-        $this->assertEquals('492', $stringResult);
-    }
-
-    public function testAdd()
-    {
-        $a = Integer::createByString('6150');
-        $b = Integer::createByString('738');
-        $c = $a->add($b);
-        $this->assertEquals('6888', strval($c));
-
-        $a = Integer::createByString('738');
-        $b = Integer::createByString('6150');
-        $c = $a->add($b);
-        $this->assertEquals('6888', strval($c));
-
-        $a = Integer::createByString('1234');
-        $b = Integer::createByString('0');
-        $c = $a->add($b);
-        $this->assertEquals('1234', strval($c));
-
-        $a = Integer::createByString('0');
-        $b = Integer::createByString('1234');
-        $c = $a->add($b);
-        $this->assertEquals('1234', strval($c));
-
-        $a = Integer::createByString('1234');
-        $b = Integer::createByString('1');
-        $c = $a->add($b);
-        $this->assertEquals('1235', strval($c));
-
-        $a = Integer::createByString('1');
-        $b = Integer::createByString('1234');
-        $c = $a->add($b);
-        $this->assertEquals('1235', strval($c));
+        $this->assertEquals('492', strval($result));
     }
 
     public function testMultiply()
     {
-        $a = Integer::createByString('123');
-        $b = Integer::createByString('456');
-        $c = $a->multiplyBy($b);
-        $this->assertEquals('56088', strval($c));
+        $baseValue = 9999;
 
-        $a = Integer::createByString('123');
-        $b = Integer::createByString('987');
-        $c = $a->multiplyBy($b);
-        $this->assertEquals('121401', strval($c));
+        $a = Integer::createByInt($baseValue);
 
-        $a = Integer::createByString('123');
-        $b = Integer::createByString('45');
-        $c = $a->multiplyBy($b);
-        $this->assertEquals('5535', strval($c));
-
-        $a = Integer::createByString('45');
-        $b = Integer::createByString('123');
-        $c = $a->multiplyBy($b);
-        $this->assertEquals('5535', strval($c));
-
-        $a = Integer::createByString('123456789');
-        $b = Integer::createByString('123');
-        $c = $a->multiplyBy($b);
-        $this->assertEquals('15185185047', strval($c));
-
-        $a = Integer::createByString('123456789');
-        $b = Integer::createByString('1');
-        $c = $a->multiplyBy($b);
-        $this->assertEquals('123456789', strval($c));
-
-        $a = Integer::createByString('999');
-        $b = Integer::createByString('9');
-        $c = $a->multiplyBy($b);
-        $this->assertEquals('8991', strval($c));
+        for ($i = 0; $i <= $baseValue; $i++) {
+            $this->assertEquals('' . ($baseValue * $i), strval($a->multiplyBy(Integer::createByInt($i))));
+        }
 
         $a = Integer::createByString('123456789');
         $b = Integer::createByString('999999');
@@ -202,43 +173,5 @@ class IntegerTest extends TestCase
         $a = Integer::createByString('456');
         $b = Integer::createByString('123');
         $this->assertTrue($a->greaterThan($b));
-    }
-
-    public function testSubtract()
-    {
-        $a = Integer::createByString('5');
-        $b = Integer::createByString('3');
-        $c = $a->subtract($b);
-        $this->assertEquals('2', strval($c));
-
-        $a = Integer::createByString('10');
-        $b = Integer::createByString('5');
-        $c = $a->subtract($b);
-        $this->assertEquals('5', strval($c));
-
-        $a = Integer::createByString('12');
-        $b = Integer::createByString('8');
-        $c = $a->subtract($b);
-        $this->assertEquals('4', strval($c));
-
-        $a = Integer::createByString('123');
-        $b = Integer::createByString('4');
-        $c = $a->subtract($b);
-        $this->assertEquals('119', strval($c));
-
-        $a = Integer::createByString('3456');
-        $b = Integer::createByString('1999');
-        $c = $a->subtract($b);
-        $this->assertEquals('1457', strval($c));
-
-        $a = Integer::createByString('728');
-        $b = Integer::createByString('51');
-        $c = $a->subtract($b);
-        $this->assertEquals('677', strval($c));
-
-        $a = Integer::createByString('9000');
-        $b = Integer::createByString('297');
-        $c = $a->subtract($b);
-        $this->assertEquals('8703', strval($c));
     }
 }
