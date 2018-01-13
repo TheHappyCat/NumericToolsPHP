@@ -161,25 +161,42 @@ class Integer
      */
     public function greaterThan(Integer $number)
     {
-        $result = false;
-
         if (!empty($number)) {
             $comparison = sizeof($this->value) <=> sizeof($number->value);
 
+            // if the length of both numbers is the same
             if ($comparison === 0) {
-                foreach ($this->value as $index => $currentDigit) {
-                    if ($currentDigit > $number->value[$index]) {
-                        $result = true;
-                        break;
+                // if both numbers are equal
+                if ($this->getStringValue() === $number->getStringValue()) {
+                    return false;
+                }
+
+                // if the first digit of the current number is greater than the first digit of the other number
+                if ($this->value[0] > $number->value[0]) {
+                    return true;
+                }
+
+                // if the first digit of the current number is less than the first digit of the other number
+                if ($this->value[0] < $number->value[0]) {
+                    return false;
+                }
+
+                // both numbers have the same length, they are not equal and their first digit is equal
+
+                for ($i = 1; $i < sizeof($this->value); $i++) {
+                    if ($this->value[$i] < $number->value[$i]) {
+                        return false;
                     }
                 }
+
+                // same length, not equal, first digit equal and current number greater than the other number
+                return true;
             }
+            // if the length of both numbers is not the same
             else {
-                $result = $comparison === 1;
+                return $comparison === 1;
             }
         }
-
-        return $result;
     }
 
     /**
@@ -337,5 +354,47 @@ class Integer
         }
 
         return $numericString;
+    }
+
+    /**
+     * @param \TheHappyCat\NumericTools\Integer $divisor
+     * @return \TheHappyCat\NumericTools\Integer
+     * @throws Exception
+     */
+    public function getMaximumMultiplier($divisor)
+    {
+        if (!$this->greaterOrEqualTo($divisor)) {
+            throw new Exception('The current number (dividend) must be greater or equal to the divisor');
+        }
+
+        $multiplier = Integer::createByInt(1);
+
+        do {
+            $multiplication = $divisor->multiplyBy($multiplier);
+
+            if (strval($multiplication) === strval($this)) {
+                return $multiplier;
+            }
+
+            if ($multiplication->greaterThan($this)) {
+                return $multiplier->subtract(
+                    Integer::createByInt(1)
+                );
+            }
+            else {
+                $multiplier = $multiplier->add(
+                    Integer::createByInt(1)
+                );
+            }
+        }
+        while (true);
+    }
+
+    /**
+     * @param \TheHappyCat\NumericTools\Integer $divisor
+     */
+    public function divide($divisor)
+    {
+
     }
 }

@@ -90,8 +90,11 @@ class IntegerTest extends TestCase
 
         $a = Integer::createByInt($baseValue);
 
-        for ($i = 0; $i <= $baseValue; $i++) {
-            $this->assertEquals('' . $baseValue + $i, strval($a->add(Integer::createByInt($i))));
+        for ($i = 0; $i < $baseValue; $i++) {
+            $numericAddition = $baseValue + $i;
+            $b = $a->add(Integer::createByInt($i));
+
+            $this->assertEquals('' . $numericAddition, strval($b));
         }
     }
 
@@ -154,24 +157,85 @@ class IntegerTest extends TestCase
 
     public function testGreaterThan()
     {
+        // false
         $a = Integer::createByString('1');
-        $b = Integer::createByString('123');
+        $b = Integer::createByString('1');
         $this->assertFalse($a->greaterThan($b));
 
-        $a = Integer::createByString('123');
+        // true
+        $a = Integer::createByString('2');
         $b = Integer::createByString('1');
         $this->assertTrue($a->greaterThan($b));
 
-        $a = Integer::createByString('123');
-        $b = Integer::createByString('123');
+        // false
+        $a = Integer::createByString('1');
+        $b = Integer::createByString('2');
         $this->assertFalse($a->greaterThan($b));
 
-        $a = Integer::createByString('123');
-        $b = Integer::createByString('456');
+        // false
+        $a = Integer::createByString('5432');
+        $b = Integer::createByString('5678');
         $this->assertFalse($a->greaterThan($b));
 
-        $a = Integer::createByString('456');
-        $b = Integer::createByString('123');
+        // false
+        $a = Integer::createByString('5543');
+        $b = Integer::createByString('5567');
+        $this->assertFalse($a->greaterThan($b));
+
+        // false
+        $a = Integer::createByString('5554');
+        $b = Integer::createByString('5556');
+        $this->assertFalse($a->greaterThan($b));
+
+        // false (first case)
+        $a = Integer::createByString('5555');
+        $b = Integer::createByString('5555');
+        $this->assertFalse($a->greaterThan($b));
+
+        // true
+        $a = Integer::createByString('5556');
+        $b = Integer::createByString('5554');
         $this->assertTrue($a->greaterThan($b));
+
+        $baseValue = 9999;
+
+        $a = Integer::createByInt($baseValue);
+
+        for ($i = 0; $i < $baseValue; $i++) {
+            $b = Integer::createByInt($i);
+
+            $this->assertTrue($a->greaterThan($b));
+        }
+    }
+
+    public function testStringLength()
+    {
+        $stringLength = 1000000;
+
+        $stringHolder = '';
+
+        for($i = 0; $i < $stringLength; $i++) {
+            $stringHolder = $stringHolder . rand(0, 9);
+        }
+
+        $this->assertEquals($stringLength, strlen($stringHolder));
+    }
+
+    public function testMaximumMultiplier()
+    {
+        $dividend = Integer::createByInt(1);
+        $divisor = Integer::createByInt(1);
+        $multiplier = $dividend->getMaximumMultiplier($divisor);
+        $this->assertEquals(strval($multiplier), '1');
+
+        $dividend = Integer::createByInt(100);
+        $divisor = Integer::createByInt(2);
+        $multiplier = $dividend->getMaximumMultiplier($divisor);
+        $this->assertEquals(strval($multiplier), '50');
+
+        $dividend = Integer::createByInt(59580);
+        $divisor = Integer::createByInt(30);
+        $multiplier = $dividend->getMaximumMultiplier($divisor);
+        $this->assertEquals(strval($multiplier), '1986');
     }
 }
