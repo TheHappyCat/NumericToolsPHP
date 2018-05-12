@@ -20,6 +20,10 @@ class IntegerTest extends TestCase
 
         $this->assertNotTrue(NumberValidations::stringIsInteger('-0'));
 
+        $this->assertNotTrue(NumberValidations::stringIsInteger('-00'));
+
+        $this->assertNotTrue(NumberValidations::stringIsInteger('00'));
+
         $this->assertNotTrue(NumberValidations::stringIsInteger('0123'));
 
         $this->assertTrue(NumberValidations::stringIsInteger('-2048'));
@@ -206,6 +210,11 @@ class IntegerTest extends TestCase
 
             $this->assertTrue($a->greaterThan($b));
         }
+
+        // true
+        $a = Integer::createByInt(1500);
+        $b = Integer::createByInt(1492);
+        $this->assertTrue($a->greaterThan($b));
     }
 
     public function testStringLength()
@@ -226,16 +235,69 @@ class IntegerTest extends TestCase
         $dividend = Integer::createByInt(1);
         $divisor = Integer::createByInt(1);
         $multiplier = $dividend->getMaximumMultiplier($divisor);
-        $this->assertEquals(strval($multiplier), '1');
+        $this->assertEquals('1', strval($multiplier));
 
         $dividend = Integer::createByInt(100);
         $divisor = Integer::createByInt(2);
         $multiplier = $dividend->getMaximumMultiplier($divisor);
-        $this->assertEquals(strval($multiplier), '50');
+        $this->assertEquals('50', strval($multiplier));
 
         $dividend = Integer::createByInt(59580);
         $divisor = Integer::createByInt(30);
         $multiplier = $dividend->getMaximumMultiplier($divisor);
-        $this->assertEquals(strval($multiplier), '1986');
+        $this->assertEquals('1986', strval($multiplier));
+
+        $dividend = Integer::createByInt(1580);
+        $divisor = Integer::createByInt(30);
+        $multiplier = $dividend->getMaximumMultiplier($divisor);
+        $this->assertEquals('52', $multiplier);
+
+        $dividend = Integer::createByInt(2474);
+        $divisor = Integer::createByInt(987);
+        $multiplier = $dividend->getMaximumMultiplier($divisor);
+        $this->assertEquals('2', $multiplier);
+    }
+
+    public function testNumberLength()
+    {
+        $number = Integer::createByInt(1234);
+        $this->assertEquals($number->getLength(), 4);
+    }
+
+    public function testDivision()
+    {
+        /**
+         * 1234567890 / 987
+         * http://www.wolframalpha.com/input/?i=1234567890+%2F+987
+         */
+
+        $dividend = Integer::createByString('1234567890');
+        $divisor = Integer::createByString('987');
+
+        $result = $dividend->divideBy($divisor);
+        $this->assertEquals('1250828', $result);
+
+        $mod = $dividend->mod($divisor);
+        $this->assertEquals('654', $mod);
+
+        $originalNumber = $result->multiplyBy($divisor)->add($mod);
+        $this->assertEquals($dividend, $originalNumber);
+
+        /**
+         * 98765432123456789 / 123456
+         * http://www.wolframalpha.com/input/?i=98765432123456789+%2F+123456
+         */
+
+        $dividend = Integer::createByString('98765432123456789');
+        $divisor = Integer::createByString('123456');
+
+        $result = $dividend->divideBy($divisor);
+        $this->assertEquals('800005120232', $result);
+
+        $mod = $dividend->mod($divisor);
+        $this->assertEquals('94997', $mod);
+
+        $originalNumber = $result->multiplyBy($divisor)->add($mod);
+        $this->assertEquals($dividend, $originalNumber);
     }
 }

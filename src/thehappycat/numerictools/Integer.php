@@ -1,6 +1,7 @@
 <?php namespace TheHappyCat\NumericTools;
 
 use Exception;
+use SebastianBergmann\CodeCoverage\Report\PHP;
 
 /**
  * Class Integer
@@ -83,6 +84,20 @@ class Integer
     }
 
     /**
+     * @return bool
+     */
+    public function isZero()
+    {
+        if (sizeof($this->value) === 1) {
+            if ($this->value[0] === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
@@ -96,6 +111,14 @@ class Integer
     public function getStringValue()
     {
         return $this->__toString();
+    }
+
+    /**
+     * @return int
+     */
+    public function getLength()
+    {
+        return strlen($this->getStringValue());
     }
 
     /**
@@ -184,13 +207,26 @@ class Integer
                 // both numbers have the same length, they are not equal and their first digit is equal
 
                 for ($i = 1; $i < sizeof($this->value); $i++) {
-                    if ($this->value[$i] < $number->value[$i]) {
+                    $a0 = $this->value[$i - 1];
+                    $a = $this->value[$i];
+
+                    $b0 = $number->value[$i - 1];
+                    $b = $number->value[$i];
+
+                    if ($a0 === $b0 && $a < $b) {
                         return false;
+                    }
+
+                    if ($a === 0 && ($a0 >= $b0 || $a0 === 0)) {
+                        continue;
+                    }
+
+                    if ($a > $b) {
+                        return true;
                     }
                 }
 
-                // same length, not equal, first digit equal and current number greater than the other number
-                return true;
+                return false;
             }
             // if the length of both numbers is not the same
             else {
@@ -207,7 +243,7 @@ class Integer
     {
         // e.g. -8 - (-4) = -8 + 4 = -4
         if ($this->isNegative() && $number->isNegative()) {
-
+            // @todo
         }
 
         // e.g. 8 - (-4) = 8 + 4 = 12
@@ -221,7 +257,7 @@ class Integer
 
         // e.g. -8 - 4 = -12
         if ($this->isNegative() && !$number->isNegative()) {
-
+            // @todo
         }
 
         $thisGreaterOrEqual = $this->greaterOrEqualTo($number);
@@ -341,7 +377,7 @@ class Integer
      * @param string $numericString
      * @return string
      */
-    private function purgeZeros($numericString)
+    private function purgeZeros(string $numericString)
     {
         if ($numericString[0] === '0') {
             for ($i = 0; $i < strlen($numericString) - 1; $i++) {
@@ -361,7 +397,7 @@ class Integer
      * @return \TheHappyCat\NumericTools\Integer
      * @throws Exception
      */
-    public function getMaximumMultiplier($divisor)
+    public function getMaximumMultiplier(Integer $divisor)
     {
         if (!$this->greaterOrEqualTo($divisor)) {
             throw new Exception('The current number (dividend) must be greater or equal to the divisor');
@@ -391,10 +427,98 @@ class Integer
     }
 
     /**
-     * @param \TheHappyCat\NumericTools\Integer $divisor
+     * @param Integer $divisor
+     * @return Integer
+     * @throws Exception
      */
-    public function divide($divisor)
+    public function mod(Integer $divisor)
     {
+        return $this->divideBy($divisor, true);
+    }
 
+    /**
+     * @param Integer $divisor
+     * @param bool $modMode
+     * @return Integer
+     * @throws Exception
+     */
+    public function divideBy(Integer $divisor, $modMode = false)
+    {
+        if (empty($divisor)) {
+            throw new Exception('A divisor is required');
+        }
+
+        if ($divisor->isZero()) {
+            throw new Exception("Can't divide by zero!");
+        }
+
+        if ($this->isZero()) {
+            return Integer::createByInt(0);
+        }
+
+        if ($divisor->greaterThan($this)) {
+            throw new Exception('Operation currently not supported');
+        }
+
+        $stringResult = '';
+
+        $currentIndex = 0;
+
+        $currentSelection = Integer::createByString(
+            implode('', array_slice($this->value, $currentIndex, $divisor->getLength()))
+        );
+
+        if (!$currentSelection->greaterOrEqualTo($divisor)) {
+            $currentSelection = Integer::createByString(
+                implode('', array_slice($this->value, $currentIndex, $divisor->getLength() + 1))
+            );
+
+            $currentIndex = $divisor->getLength() + 1;
+        }
+        else {
+            $currentIndex = $divisor->getLength();
+        }
+
+        $maxMultiplier = $currentSelection->getMaximumMultiplier($divisor);
+
+        $stringResult .= $maxMultiplier->getStringValue();
+
+        $multiplication = $maxMultiplier->multiplyBy($divisor);
+
+        $remainder = $currentSelection->subtract($multiplication);
+
+        //
+
+        do {
+            $currentSelection = Integer::createByString(
+                $remainder->getStringValue() . implode('', array_slice($this->value, $currentIndex, 1))
+            );
+
+            if (!$currentSelection->greaterOrEqualTo($divisor)) {
+                $stringResult .= '0';
+
+                $currentIndex++;
+
+                $remainder = $currentSelection;
+                continue;
+            }
+
+            $currentIndex++;
+
+            $maxMultiplier = $currentSelection->getMaximumMultiplier($divisor);
+
+            $stringResult .= $maxMultiplier->getStringValue();
+
+            $multiplication = $maxMultiplier->multiplyBy($divisor);
+
+            $remainder = $currentSelection->subtract($multiplication);
+        }
+        while ($currentIndex < $this->getLength());
+
+        if ($modMode) {
+            return $remainder;
+        }
+
+        return Integer::createByString($stringResult);
     }
 }
