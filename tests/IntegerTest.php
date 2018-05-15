@@ -309,11 +309,13 @@ class IntegerTest extends TestCase
          * http://www.wolframalpha.com/input/?i=123456789876543212345678987654321+%2F+12345678987654321
          */
 
-        /*$dividend = Integer::createByString('123456789876543212345678987654321');
+        $dividend = Integer::createByString('123456789876543212345678987654321');
         $divisor = Integer::createByString('12345678987654321');
 
         $result = $dividend->divideBy($divisor);
-        $this->assertEquals('10000000000000000', $result);
+        echo print_r($result, true);
+        
+        /*$this->assertEquals('10000000000000000', $result);
 
         $mod = $dividend->mod($divisor);
         $this->assertEquals('2345678987654321', $mod);
