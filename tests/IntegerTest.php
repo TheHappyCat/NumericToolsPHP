@@ -299,5 +299,22 @@ class IntegerTest extends TestCase
 
         $originalNumber = $result->multiplyBy($divisor)->add($mod);
         $this->assertEquals($dividend, $originalNumber);
+        
+        /**
+         * 123456789876543212345678987654321 / 12345678987654321
+         * http://www.wolframalpha.com/input/?i=123456789876543212345678987654321+%2F+12345678987654321
+         */
+
+        $dividend = Integer::createByString('123456789876543212345678987654321');
+        $divisor = Integer::createByString('12345678987654321');
+
+        $result = $dividend->divideBy($divisor);
+        $this->assertEquals('10000000000000000', $result);
+
+        $mod = $dividend->mod($divisor);
+        $this->assertEquals('2345678987654321', $mod);
+
+        $originalNumber = $result->multiplyBy($divisor)->add($mod);
+        $this->assertEquals($dividend, $originalNumber);
     }
 }
