@@ -461,7 +461,6 @@ class Integer
         }
 
         $stringResult = '';
-
         $currentIndex = 0;
 
         $currentSelection = Integer::createByString(
@@ -480,16 +479,11 @@ class Integer
         }
 
         $maxMultiplier = $currentSelection->getMaximumMultiplier($divisor);
-
         $stringResult .= $maxMultiplier->getStringValue();
-
         $multiplication = $maxMultiplier->multiplyBy($divisor);
-
         $remainder = $currentSelection->subtract($multiplication);
 
-        //
-
-        do {
+        while ($currentIndex < $this->getLength()) {
             $currentSelection = Integer::createByString(
                 $remainder->getStringValue() . implode('', array_slice($this->value, $currentIndex, 1))
             );
@@ -506,14 +500,10 @@ class Integer
             $currentIndex++;
 
             $maxMultiplier = $currentSelection->getMaximumMultiplier($divisor);
-
             $stringResult .= $maxMultiplier->getStringValue();
-
             $multiplication = $maxMultiplier->multiplyBy($divisor);
-
             $remainder = $currentSelection->subtract($multiplication);
         }
-        while ($currentIndex < $this->getLength());
 
         if ($modMode) {
             return $remainder;

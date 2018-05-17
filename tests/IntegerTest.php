@@ -271,20 +271,49 @@ class IntegerTest extends TestCase
     public function testDivision()
     {
         /**
+         * 0 / 1
+         */
+
+        $dividend = Integer::createByString('0');
+        $divisor = Integer::createByString('1');
+        $quotient = $dividend->divideBy($divisor);
+        $this->assertEquals('0', $quotient);
+
+        $mod = $dividend->mod($divisor);
+        $this->assertEquals('0', $mod);
+
+        $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
+        $this->assertEquals($dividend, $originalNumber);
+
+        /**
+         * 1 / 1
+         */
+
+        $dividend = Integer::createByString('1');
+        $divisor = Integer::createByString('1');
+        $quotient = $dividend->divideBy($divisor);
+        $this->assertEquals('1', $quotient);
+
+        $mod = $dividend->mod($divisor);
+        $this->assertEquals('0', $mod);
+
+        $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
+        $this->assertEquals($dividend, $originalNumber);
+
+        /**
          * 1234567890 / 987
          * http://www.wolframalpha.com/input/?i=1234567890+%2F+987
          */
 
         $dividend = Integer::createByString('1234567890');
         $divisor = Integer::createByString('987');
-
-        $result = $dividend->divideBy($divisor);
-        $this->assertEquals('1250828', $result);
+        $quotient = $dividend->divideBy($divisor);
+        $this->assertEquals('1250828', $quotient);
 
         $mod = $dividend->mod($divisor);
         $this->assertEquals('654', $mod);
 
-        $originalNumber = $result->multiplyBy($divisor)->add($mod);
+        $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
         $this->assertEquals($dividend, $originalNumber);
 
         /**
@@ -294,28 +323,39 @@ class IntegerTest extends TestCase
 
         $dividend = Integer::createByString('98765432123456789');
         $divisor = Integer::createByString('123456');
-
-        $result = $dividend->divideBy($divisor);
-        $this->assertEquals('800005120232', $result);
+        $quotient = $dividend->divideBy($divisor);
+        $this->assertEquals('800005120232', $quotient);
 
         $mod = $dividend->mod($divisor);
         $this->assertEquals('94997', $mod);
 
-        $originalNumber = $result->multiplyBy($divisor)->add($mod);
+        $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
         $this->assertEquals($dividend, $originalNumber);
-        
-        $dividend = Integer::createByString('1');
-        $divisor = Integer::createByString('1');
-        
-        $result = $dividend->divideBy($divisor);
-        echo print_r($result, true);
-        
-        /*$this->assertEquals('10000000000000000', $result);
+
+        /**
+         * 987654321234567898765432123456789 / 12345678987654321
+         * http://www.wolframalpha.com/input/?i=987654321234567898765432123456789+%2F+12345678987654321
+         */
+
+        $dividend = Integer::createByString('987654321234567898765432123456789');
+        $divisor = Integer::createByString('12345678987654321');
+        $quotient = $dividend->divideBy($divisor);
+        $this->assertEquals('80000000180000000', $quotient);
 
         $mod = $dividend->mod($divisor);
-        $this->assertEquals('2345678987654321', $mod);
+        $this->assertEquals('987654343456789', $mod);
 
-        $originalNumber = $result->multiplyBy($divisor)->add($mod);
-        $this->assertEquals($dividend, $originalNumber);*/
+        $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
+        $this->assertEquals($dividend, $originalNumber);
+    }
+
+    public function testDivisionByZeroException()
+    {
+        $dividend = Integer::createByString('0');
+        $divisor = Integer::createByString('0');
+
+        $this->expectException(Exception::class);
+
+        $dividend->divideBy($divisor);
     }
 }
