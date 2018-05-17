@@ -301,6 +301,36 @@ class IntegerTest extends TestCase
         $this->assertEquals($dividend, $originalNumber);
 
         /**
+         * 25 / 5
+         */
+
+        $dividend = Integer::createByString('25');
+        $divisor = Integer::createByString('5');
+        $quotient = $dividend->divideBy($divisor);
+        $this->assertEquals('5', $quotient);
+
+        $mod = $dividend->mod($divisor);
+        $this->assertEquals('0', $mod);
+
+        $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
+        $this->assertEquals($dividend, $originalNumber);
+
+        /**
+         * 26 / 5
+         */
+
+        $dividend = Integer::createByString('26');
+        $divisor = Integer::createByString('5');
+        $quotient = $dividend->divideBy($divisor);
+        $this->assertEquals('5', $quotient);
+
+        $mod = $dividend->mod($divisor);
+        $this->assertEquals('1', $mod);
+
+        $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
+        $this->assertEquals($dividend, $originalNumber);
+
+        /**
          * 1234567890 / 987
          * http://www.wolframalpha.com/input/?i=1234567890+%2F+987
          */
