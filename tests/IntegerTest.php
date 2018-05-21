@@ -410,14 +410,14 @@ class IntegerTest extends TestCase
 
         for ($i = $initialIndex; $i < $initialIndex + 1000; $i++) {
             $numericDividend = $i;
-            $numericDivisor = 3;
+            $numericDivisor = 2;
             $numericQuotient = intdiv($numericDividend, $numericDivisor);
             $numericModule = $numericDividend % $numericDivisor;
 
             //$numericMessage = sprintf('%s / %s = %s * %s + %s', $numericDividend, $numericDivisor, $numericQuotient, $numericDivisor, $numericModule);
 
             $objectDividend = Integer::createByInt($i);
-            $objectDivisor = Integer::createByInt(3);
+            $objectDivisor = Integer::createByInt(2);
             $objectQuotient= $objectDividend->divideBy($objectDivisor);
             $objectModule = $objectDividend->mod($objectDivisor);
 
