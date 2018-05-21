@@ -274,7 +274,7 @@ class IntegerTest extends TestCase
          * 0 / 1
          */
 
-        /*$dividend = Integer::createByString('0');
+        $dividend = Integer::createByString('0');
         $divisor = Integer::createByString('1');
         $quotient = $dividend->divideBy($divisor);
         $this->assertEquals('0', $quotient);
@@ -283,13 +283,13 @@ class IntegerTest extends TestCase
         $this->assertEquals('0', $mod);
 
         $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
-        $this->assertEquals($dividend, $originalNumber);*/
+        $this->assertEquals($dividend, $originalNumber);
 
         /**
          * 1 / 1
          */
 
-        /*$dividend = Integer::createByString('1');
+        $dividend = Integer::createByString('1');
         $divisor = Integer::createByString('1');
         $quotient = $dividend->divideBy($divisor);
         $this->assertEquals('1', $quotient);
@@ -298,13 +298,13 @@ class IntegerTest extends TestCase
         $this->assertEquals('0', $mod);
 
         $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
-        $this->assertEquals($dividend, $originalNumber);*/
+        $this->assertEquals($dividend, $originalNumber);
 
         /**
          * 25 / 5
          */
 
-        /*$dividend = Integer::createByString('25');
+        $dividend = Integer::createByString('25');
         $divisor = Integer::createByString('5');
         $quotient = $dividend->divideBy($divisor);
         $this->assertEquals('5', $quotient);
@@ -313,13 +313,13 @@ class IntegerTest extends TestCase
         $this->assertEquals('0', $mod);
 
         $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
-        $this->assertEquals($dividend, $originalNumber);*/
+        $this->assertEquals($dividend, $originalNumber);
 
         /**
          * 26 / 5
          */
 
-        /*$dividend = Integer::createByString('26');
+        $dividend = Integer::createByString('26');
         $divisor = Integer::createByString('5');
         $quotient = $dividend->divideBy($divisor);
         $this->assertEquals('5', $quotient);
@@ -328,7 +328,7 @@ class IntegerTest extends TestCase
         $this->assertEquals('1', $mod);
 
         $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
-        $this->assertEquals($dividend, $originalNumber);*/
+        $this->assertEquals($dividend, $originalNumber);
 
         /**
          * 30 / 3
@@ -350,7 +350,7 @@ class IntegerTest extends TestCase
          * http://www.wolframalpha.com/input/?i=1234567890+%2F+987
          */
 
-        /*$dividend = Integer::createByString('1234567890');
+        $dividend = Integer::createByString('1234567890');
         $divisor = Integer::createByString('987');
         $quotient = $dividend->divideBy($divisor);
         $this->assertEquals('1250828', $quotient);
@@ -359,14 +359,14 @@ class IntegerTest extends TestCase
         $this->assertEquals('654', $mod);
 
         $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
-        $this->assertEquals($dividend, $originalNumber);*/
+        $this->assertEquals($dividend, $originalNumber);
 
         /**
          * 98765432123456789 / 123456
          * http://www.wolframalpha.com/input/?i=98765432123456789+%2F+123456
          */
 
-        /*$dividend = Integer::createByString('98765432123456789');
+        $dividend = Integer::createByString('98765432123456789');
         $divisor = Integer::createByString('123456');
         $quotient = $dividend->divideBy($divisor);
         $this->assertEquals('800005120232', $quotient);
@@ -375,14 +375,14 @@ class IntegerTest extends TestCase
         $this->assertEquals('94997', $mod);
 
         $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
-        $this->assertEquals($dividend, $originalNumber);*/
+        $this->assertEquals($dividend, $originalNumber);
 
         /**
          * 987654321234567898765432123456789 / 12345678987654321
          * http://www.wolframalpha.com/input/?i=987654321234567898765432123456789+%2F+12345678987654321
          */
 
-        /*$dividend = Integer::createByString('987654321234567898765432123456789');
+        $dividend = Integer::createByString('987654321234567898765432123456789');
         $divisor = Integer::createByString('12345678987654321');
         $quotient = $dividend->divideBy($divisor);
         $this->assertEquals('80000000180000000', $quotient);
@@ -391,7 +391,7 @@ class IntegerTest extends TestCase
         $this->assertEquals('987654343456789', $mod);
 
         $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
-        $this->assertEquals($dividend, $originalNumber);*/
+        $this->assertEquals($dividend, $originalNumber);
     }
 
     public function testDivisionByZeroException()
