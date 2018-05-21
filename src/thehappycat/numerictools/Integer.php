@@ -1,13 +1,12 @@
 <?php namespace TheHappyCat\NumericTools;
 
 use Exception;
-use SebastianBergmann\CodeCoverage\Report\PHP;
 
 /**
  * Class Integer
  * @package TheHappyCat\NumericTools
  */
-class Integer
+class Integer extends Number
 {
     /**
      * @var array
@@ -59,7 +58,9 @@ class Integer
     public function setStringValue(string $value)
     {
         if (!NumberValidations::stringIsInteger($value)) {
-            throw new Exception('The given value is not a valid number');
+            throw new Exception(
+                sprintf('The given value is not a valid number: %s', $value)
+            );
         }
 
         $parts = str_split($value);
@@ -457,7 +458,7 @@ class Integer
         }
 
         if ($divisor->greaterThan($this)) {
-            throw new Exception('Operation currently not supported');
+            throw new Exception(sprintf('Operation currently not supported: %s > %s', $divisor, $this));
         }
 
         $stringResult = '';
@@ -485,7 +486,9 @@ class Integer
 
         while ($currentIndex < $this->getLength()) {
             $currentSelection = Integer::createByString(
-                $remainder->getStringValue() . implode('', array_slice($this->value, $currentIndex, 1))
+                $this->purgeZeros(
+                    $remainder->getStringValue() . implode('', array_slice($this->value, $currentIndex, 1))
+                )
             );
 
             if (!$currentSelection->greaterOrEqualTo($divisor)) {

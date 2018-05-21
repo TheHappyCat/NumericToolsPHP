@@ -274,7 +274,7 @@ class IntegerTest extends TestCase
          * 0 / 1
          */
 
-        $dividend = Integer::createByString('0');
+        /*$dividend = Integer::createByString('0');
         $divisor = Integer::createByString('1');
         $quotient = $dividend->divideBy($divisor);
         $this->assertEquals('0', $quotient);
@@ -283,13 +283,13 @@ class IntegerTest extends TestCase
         $this->assertEquals('0', $mod);
 
         $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
-        $this->assertEquals($dividend, $originalNumber);
+        $this->assertEquals($dividend, $originalNumber);*/
 
         /**
          * 1 / 1
          */
 
-        $dividend = Integer::createByString('1');
+        /*$dividend = Integer::createByString('1');
         $divisor = Integer::createByString('1');
         $quotient = $dividend->divideBy($divisor);
         $this->assertEquals('1', $quotient);
@@ -298,13 +298,13 @@ class IntegerTest extends TestCase
         $this->assertEquals('0', $mod);
 
         $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
-        $this->assertEquals($dividend, $originalNumber);
+        $this->assertEquals($dividend, $originalNumber);*/
 
         /**
          * 25 / 5
          */
 
-        $dividend = Integer::createByString('25');
+        /*$dividend = Integer::createByString('25');
         $divisor = Integer::createByString('5');
         $quotient = $dividend->divideBy($divisor);
         $this->assertEquals('5', $quotient);
@@ -313,19 +313,34 @@ class IntegerTest extends TestCase
         $this->assertEquals('0', $mod);
 
         $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
-        $this->assertEquals($dividend, $originalNumber);
+        $this->assertEquals($dividend, $originalNumber);*/
 
         /**
          * 26 / 5
          */
 
-        $dividend = Integer::createByString('26');
+        /*$dividend = Integer::createByString('26');
         $divisor = Integer::createByString('5');
         $quotient = $dividend->divideBy($divisor);
         $this->assertEquals('5', $quotient);
 
         $mod = $dividend->mod($divisor);
         $this->assertEquals('1', $mod);
+
+        $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
+        $this->assertEquals($dividend, $originalNumber);*/
+
+        /**
+         * 30 / 3
+         */
+
+        $dividend = Integer::createByString('30');
+        $divisor = Integer::createByString('3');
+        $quotient = $dividend->divideBy($divisor);
+        $this->assertEquals('10', $quotient);
+
+        $mod = $dividend->mod($divisor);
+        $this->assertEquals('0', $mod);
 
         $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
         $this->assertEquals($dividend, $originalNumber);
@@ -335,7 +350,7 @@ class IntegerTest extends TestCase
          * http://www.wolframalpha.com/input/?i=1234567890+%2F+987
          */
 
-        $dividend = Integer::createByString('1234567890');
+        /*$dividend = Integer::createByString('1234567890');
         $divisor = Integer::createByString('987');
         $quotient = $dividend->divideBy($divisor);
         $this->assertEquals('1250828', $quotient);
@@ -344,14 +359,14 @@ class IntegerTest extends TestCase
         $this->assertEquals('654', $mod);
 
         $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
-        $this->assertEquals($dividend, $originalNumber);
+        $this->assertEquals($dividend, $originalNumber);*/
 
         /**
          * 98765432123456789 / 123456
          * http://www.wolframalpha.com/input/?i=98765432123456789+%2F+123456
          */
 
-        $dividend = Integer::createByString('98765432123456789');
+        /*$dividend = Integer::createByString('98765432123456789');
         $divisor = Integer::createByString('123456');
         $quotient = $dividend->divideBy($divisor);
         $this->assertEquals('800005120232', $quotient);
@@ -360,14 +375,14 @@ class IntegerTest extends TestCase
         $this->assertEquals('94997', $mod);
 
         $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
-        $this->assertEquals($dividend, $originalNumber);
+        $this->assertEquals($dividend, $originalNumber);*/
 
         /**
          * 987654321234567898765432123456789 / 12345678987654321
          * http://www.wolframalpha.com/input/?i=987654321234567898765432123456789+%2F+12345678987654321
          */
 
-        $dividend = Integer::createByString('987654321234567898765432123456789');
+        /*$dividend = Integer::createByString('987654321234567898765432123456789');
         $divisor = Integer::createByString('12345678987654321');
         $quotient = $dividend->divideBy($divisor);
         $this->assertEquals('80000000180000000', $quotient);
@@ -376,7 +391,7 @@ class IntegerTest extends TestCase
         $this->assertEquals('987654343456789', $mod);
 
         $originalNumber = $quotient->multiplyBy($divisor)->add($mod);
-        $this->assertEquals($dividend, $originalNumber);
+        $this->assertEquals($dividend, $originalNumber);*/
     }
 
     public function testDivisionByZeroException()
@@ -387,5 +402,27 @@ class IntegerTest extends TestCase
         $this->expectException(Exception::class);
 
         $dividend->divideBy($divisor);
+    }
+
+    public function testSeveralDivisions()
+    {
+        $initialIndex = 2;
+
+        for ($i = $initialIndex; $i < $initialIndex + 1000; $i++) {
+            $numericDividend = $i;
+            $numericDivisor = 3;
+            $numericQuotient = intdiv($numericDividend, $numericDivisor);
+            $numericModule = $numericDividend % $numericDivisor;
+
+            //$numericMessage = sprintf('%s / %s = %s * %s + %s', $numericDividend, $numericDivisor, $numericQuotient, $numericDivisor, $numericModule);
+
+            $objectDividend = Integer::createByInt($i);
+            $objectDivisor = Integer::createByInt(3);
+            $objectQuotient= $objectDividend->divideBy($objectDivisor);
+            $objectModule = $objectDividend->mod($objectDivisor);
+
+            $this->assertEquals($numericQuotient . '', $objectQuotient);
+            $this->assertEquals($numericModule . '', $objectModule);
+        }
     }
 }
