@@ -1,24 +1,38 @@
 # NumericTools
 
-Project created to handle numeric operations.
+PHP Project created to handle numeric operations.
 
 ![alt text](https://raw.githubusercontent.com/TheHappyCat/NumericTools/master/assets/mathematical.gif "Mathematical")
 
-Operations currently supported:
+## Operations currently supported
 
-## Addition
+### Addition
 
-## Subtraction
 
-## Multiplication
 
-## Division
+### Subtraction
 
-## Modulo
 
-## Greater than
 
-## Greater or equal to
+### Multiplication
+
+
+
+### Division
+
+
+
+### Modulo
+
+
+
+### Greater than
+
+
+
+### Greater or equal to
+
+
 
 ## Continuous integration with CircleCI
 
