@@ -36,4 +36,4 @@ PHP Project created to handle numeric operations.
 
 ## Continuous integration with CircleCI
 
-[![Build Status](https://travis-ci.org/TheHappyCat/NumericTools.svg?branch=master)](https://travis-ci.org/TheHappyCat/NumericTools)
+[![Build Status](https://travis-ci.org/TheHappyCat/NumericToolsPHP.svg?branch=master)](https://travis-ci.org/TheHappyCat/NumericToolsPHP)
