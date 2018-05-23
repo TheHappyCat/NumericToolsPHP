@@ -8,11 +8,11 @@
     "name": "thehappycat/numerictools",
     "description": "PHP project with numeric analysis tools",
     "require": {
-        "php": "^7.0",
-        "phpunit/php-code-coverage": "^5.3"
+        "php": "^7.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.4"
+        "phpunit/phpunit": "^6.4",
+        "php-coveralls/php-coveralls": "^2.1.0"
     },
     "autoload": {
         "psr-4": {
