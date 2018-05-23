@@ -22,8 +22,8 @@ before_script:
     - composer install --prefer-dist --ignore-platform-reqs
 
 script:
-  ./vendor/bin/phpunit tests/
-  php atoum.phar --test-it
+    - ./vendor/bin/phpunit tests/
+    - php atoum.phar --test-it
 
 git:
   depth: 5
