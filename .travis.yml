@@ -23,6 +23,7 @@ before_script:
 
 script:
   ./vendor/bin/phpunit tests/
+  php atoum.phar --test-it
 
 git:
   depth: 5
