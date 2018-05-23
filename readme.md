@@ -1,5 +1,9 @@
 # NumericTools
 
+[![Build Status](https://travis-ci.org/TheHappyCat/NumericToolsPHP.svg?branch=master)](https://travis-ci.org/TheHappyCat/NumericToolsPHP)
+
+[![Coverage Status](https://coveralls.io/repos/TheHappyCat/NumericToolsPHP/badge.svg?branch=master&service=github)](https://coveralls.io/github/TheHappyCat/NumericToolsPHP?branch=master)
+
 PHP Project created to handle numeric operations.
 
 ![alt text](https://raw.githubusercontent.com/TheHappyCat/NumericTools/master/assets/mathematical.gif "Mathematical")
@@ -31,9 +35,3 @@ PHP Project created to handle numeric operations.
 
 
 ### Greater or equal to
-
-
-
-## Continuous integration
-
-[![Build Status](https://travis-ci.org/TheHappyCat/NumericToolsPHP.svg?branch=master)](https://travis-ci.org/TheHappyCat/NumericToolsPHP)
