@@ -19,12 +19,10 @@ matrix:
 
 before_script:
     - rm -f composer.lock
-    - composer require atoum/atoum
     - composer install --prefer-dist --ignore-platform-reqs
 
 script:
     - ./vendor/bin/phpunit tests/
-    - ./vendor/bin/atoum --test-it
 
 git:
   depth: 5
