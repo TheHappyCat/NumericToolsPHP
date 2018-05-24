@@ -108,8 +108,8 @@ class IntegerTest extends TestCase
     
     public function testLargeAddition()
     {
-        $a = Integer::createByInt('1234567898765432123456789876543212345678987654321');
-        $b = Integer::createByInt('987654321234567898765432123456789');
+        $a = Integer::createByString('1234567898765432123456789876543212345678987654321');
+        $b = Integer::createByString('987654321234567898765432123456789');
         $c = $a->add($b);
         
         $expectedResult = '1234567898765433111111111111111111111111111111110';
