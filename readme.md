@@ -9,6 +9,8 @@ Just like the normal numeric operations you would usually do, but with numbers o
 ```php
 <?php
 
+$integerNumber = Integer::createByInt(1);
+
 $smallNumber = Integer::createByString('1');
 $largeNumber = Integer::createByString('987654321234567898765432123456789');
 ```
@@ -17,7 +19,13 @@ $largeNumber = Integer::createByString('987654321234567898765432123456789');
 
 ### Addition
 
+```php
+<?php
 
+$a = Integer::createByInt('1234567898765432123456789876543212345678987654321');
+$b = Integer::createByInt('987654321234567898765432123456789');
+$c = $a->add($b);
+```
 
 ### Subtraction
 
