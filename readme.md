@@ -6,6 +6,13 @@
 
 Just like the normal numeric operations you would usually do, but with numbers of any size.
 
+```php
+<?php
+
+$smallNumber = Integer::createByString('1');
+$largeNumber = Integer::createByString('987654321234567898765432123456789');
+```
+
 ## Operations currently supported
 
 ### Addition
