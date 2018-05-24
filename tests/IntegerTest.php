@@ -132,7 +132,7 @@ class IntegerTest extends TestCase
     {
         $a = Integer::createByString('1234567898765432123456789876543212345678987654321');
         $b = Integer::createByString('987654321234567898765432123456789');
-        $c = $a->add($b);
+        $c = $a->subtract($b);
         
         $expectedResult = '1234567898765431135802468641975313580246864197532';
         
