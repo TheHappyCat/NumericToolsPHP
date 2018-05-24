@@ -127,6 +127,17 @@ class IntegerTest extends TestCase
             $this->assertEquals('' . $baseValue - $i, strval($a->subtract(Integer::createByInt($i))));
         }
     }
+    
+    public function testLargeSubtraction()
+    {
+        $a = Integer::createByString('1234567898765432123456789876543212345678987654321');
+        $b = Integer::createByString('987654321234567898765432123456789');
+        $c = $a->add($b);
+        
+        $expectedResult = '1234567898765431135802468641975313580246864197532';
+        
+        $this->assertEquals($expectedResult, strval($c));
+    }
 
     public function testSubtractWithNegativeResults()
     {
