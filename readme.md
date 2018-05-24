@@ -1,10 +1,12 @@
+![alt text](https://raw.githubusercontent.com/TheHappyCat/NumericTools/master/assets/mathematical.gif "Mathematical")
+
 # *NumericTools*
 
 [![Build Status](https://travis-ci.org/TheHappyCat/NumericToolsPHP.svg?branch=master)](https://travis-ci.org/TheHappyCat/NumericToolsPHP) 
 
 ## A simple project created to handle large numeric operations in PHP!
 
-![alt text](https://raw.githubusercontent.com/TheHappyCat/NumericTools/master/assets/mathematical.gif "Mathematical")
+Just like the normal numeric operations you would usually do, but with numbers of any size.
 
 ## Operations currently supported
 
