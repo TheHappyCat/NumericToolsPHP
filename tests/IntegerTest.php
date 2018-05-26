@@ -180,6 +180,11 @@ class IntegerTest extends TestCase
             $this->assertEquals('' . ($baseValue * $i), strval($a->multiplyBy(Integer::createByInt($i))));
         }
 
+        $a = Integer::createByString('1');
+        $b = Integer::createByString('1');
+        $c = $a->multiplyBy($b);
+        $this->assertEquals('1', strval($c));
+
         $a = Integer::createByString('123456789');
         $b = Integer::createByString('999999');
         $c = $a->multiplyBy($b);
@@ -194,6 +199,11 @@ class IntegerTest extends TestCase
         $b = Integer::createByString('2');
         $c = $a->multiplyBy($b)->multiplyBy($b)->multiplyBy($b)->multiplyBy($b)->multiplyBy($b)->multiplyBy($b)->multiplyBy($b);
         $this->assertEquals('256', strval($c));
+
+        $a = Integer::createByString('1234567898765432123456789876543212345678987654321');
+        $b = Integer::createByString('987654321234567898765432123456789');
+        $c = $a->multiplyBy($b);
+        $this->assertEquals('1219326320073159600060966114921506736777910409998442005792202408166072245112635269', strval($c));
     }
 
     public function testGreaterThan()
@@ -447,8 +457,6 @@ class IntegerTest extends TestCase
             $numericQuotient = intdiv($numericDividend, $numericDivisor);
             $numericModule = $numericDividend % $numericDivisor;
 
-            //$numericMessage = sprintf('%s / %s = %s * %s + %s', $numericDividend, $numericDivisor, $numericQuotient, $numericDivisor, $numericModule);
-
             $objectDividend = Integer::createByInt($i);
             $objectDivisor = Integer::createByInt(2);
             $objectQuotient= $objectDividend->divideBy($objectDivisor);
@@ -457,5 +465,14 @@ class IntegerTest extends TestCase
             $this->assertEquals($numericQuotient . '', $objectQuotient);
             $this->assertEquals($numericModule . '', $objectModule);
         }
+    }
+
+    public function testCreatingLargeNumber()
+    {
+        $largeNumber = Integer::createByString('12345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321');
+        $this->assertTrue(NumberValidations::stringIsInteger($largeNumber));
+
+        $addition = $largeNumber->add(Integer::createByInt(1234));
+        $this->assertTrue(NumberValidations::stringIsInteger($addition));
     }
 }
