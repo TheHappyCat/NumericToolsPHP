@@ -145,7 +145,7 @@ class IntegerTest extends TestCase
         $b = Integer::createByString('-987654321234567898765432123456789');
         $c = $a->subtract($b);
         
-        $expectedResult = '123456789765433111111111111111111111111111111110';
+        $expectedResult = '1234567898765433111111111111111111111111111111110';
         
         $this->assertEquals($expectedResult, strval($c));
     }
