@@ -1,12 +1,15 @@
 {
+    "name": "thehappycat/numerictools",
+    "type": "project",
+    "license": "MIT",
+    "description": "PHP project to perform basic numeric operations",
+    "keywords": ["numeric tools", "large numbers", "arithmetic operations", "large numbers php", "php math"],
     "authors": [
         {
             "name": "Jean Paul Ruiz",
             "email": "jpruiz114@gmail.com"
         }
     ],
-    "name": "thehappycat/numerictools",
-    "description": "PHP project to perform basic numeric operations",
     "require": {
         "php": "^7.0"
     },
@@ -17,6 +20,6 @@
         "psr-4": {
             "TheHappyCat\\NumericTools\\": "src/thehappycat/numerictools/"
         }
-    },
-    "type": "project"
+    }
+    
 }
