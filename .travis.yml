@@ -23,6 +23,7 @@ before_script:
 
 script:
     - ./vendor/bin/phpunit tests/
+    - ./vendor/bin/phpunit --coverage-clover=coverage.xml
 
 git:
   depth: 5
