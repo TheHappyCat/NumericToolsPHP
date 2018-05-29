@@ -70,7 +70,15 @@ $c = $a->multiplyBy($b);
 
 ### Division
 
+```php
+<?php
 
+$dividend = Integer::createByString('987654321234567898765432123456789');
+$divisor = Integer::createByString('12345678987654321');
+
+// $quotient = 80000000180000000
+$quotient = $dividend->divideBy($divisor);
+```
 
 ### Modulo
 
