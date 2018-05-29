@@ -138,6 +138,17 @@ class IntegerTest extends TestCase
         
         $this->assertEquals($expectedResult, strval($c));
     }
+    
+    public function testNegativeSubtraction()
+    {
+        $a = Integer::createByString('1234567898765432123456789876543212345678987654321');
+        $b = Integer::createByString('-987654321234567898765432123456789');
+        $c = $a->subtract($b);
+        
+        $expectedResult = '123456789765433111111111111111111111111111111110';
+        
+        $this->assertEquals($expectedResult, strval($c));
+    }
 
     public function testSubtractWithNegativeResults()
     {
