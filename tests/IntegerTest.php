@@ -184,10 +184,10 @@ class IntegerTest extends TestCase
     public function testMultiplyByIntException()
     {
         $number = Integer::createByString('123');
-
-        $result = $number->multiplyByInt(10);
-
+        
         $this->expectException(Exception::class);
+        
+        $result = $number->multiplyByInt(10);
     }
 
     public function testMultiply()
