@@ -467,16 +467,6 @@ class IntegerTest extends TestCase
         $dividend->divideBy($divisor);
     }
     
-    public function testDivisionByNullException()
-    {
-        $dividend = Integer::createByString('123');
-        $divisor = null;
-
-        $this->expectException(Exception::class);
-
-        $dividend->divideBy($divisor);
-    }
-
     public function testSeveralDivisions()
     {
         $initialIndex = 2;
