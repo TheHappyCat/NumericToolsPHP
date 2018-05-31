@@ -467,6 +467,16 @@ class IntegerTest extends TestCase
         $dividend->divideBy($divisor);
     }
     
+    public function testDivisionByBiggerDivisorException()
+    {
+        $dividend = Integer::createByString('10');
+        $divisor = Integer::createByString('20');
+
+        $this->expectException(Exception::class);
+
+        $dividend->divideBy($divisor);
+    }
+    
     public function testSeveralDivisions()
     {
         $initialIndex = 2;
