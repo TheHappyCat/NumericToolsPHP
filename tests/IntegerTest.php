@@ -324,6 +324,16 @@ class IntegerTest extends TestCase
         $multiplier = $dividend->getMaximumMultiplier($divisor);
         $this->assertEquals('2', $multiplier);
     }
+    
+    public function testMaxMultiplierException()
+    {
+        $dividend = Integer::createByInt(10);
+        $divisor = Integer::createByInt(40);
+        
+        $this->expectException(Exception::class);
+
+        $multiplier = $dividend->getMaximumMultiplier($divisor);
+    }
 
     public function testNumberLength()
     {
