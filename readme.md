@@ -108,7 +108,22 @@ $b = Integer::createByString("123456789012345678901234567890");
 
 // false
 $comparison = $a->greaterThan($b);
-
 ```
 
 ### Greater or equal to
+
+```php
+<?php
+
+$a = Integer::createByString("1500");
+$b = Integer::createByString("1492");
+
+// true
+$comparison = $a->greaterOrEqualTo($b);
+
+$a = Integer::createByString("1234");
+$b = Integer::createByString("1234567890");
+
+// false
+$comparison = $a->greaterOrEqualTo($b);
+```

@@ -315,6 +315,24 @@ class IntegerTest extends TestCase
         }
     }
 
+    public function testGreaterOrEqualTo()
+    {
+        // true
+        $a = Integer::createByInt(1500);
+        $b = Integer::createByInt(1492);
+        $this->assertTrue($a->greaterOrEqualTo($b));
+
+        // true
+        $a = Integer::createByString("1234567890");
+        $b = Integer::createByString("1234567890");
+        $this->assertTrue($a->greaterOrEqualTo($b));
+
+        // false
+        $a = Integer::createByString("1234");
+        $b = Integer::createByString("1234567890");
+        $this->assertFalse($a->greaterOrEqualTo($b));
+    }
+
     public function testStringLength()
     {
         $stringLength = 1000000;
