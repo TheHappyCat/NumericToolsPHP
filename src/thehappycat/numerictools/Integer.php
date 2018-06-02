@@ -445,10 +445,6 @@ class Integer extends Number
      */
     public function divideBy(Integer $divisor, $modMode = false)
     {
-        if (empty($divisor)) {
-            throw new Exception('A divisor is required');
-        }
-
         if ($divisor->isZero()) {
             throw new Exception("Can't divide by zero!");
         }
