@@ -287,6 +287,13 @@ class IntegerTest extends TestCase
         $b = Integer::createByString('10000');
         $this->assertTrue($a->greaterThan($b));
 
+        // true
+        $a = Integer::createByInt(1500);
+        $b = Integer::createByInt(1492);
+        $this->assertTrue($a->greaterThan($b));
+
+        //
+
         $baseValue = 9999;
 
         $a = Integer::createByInt($baseValue);
@@ -296,11 +303,6 @@ class IntegerTest extends TestCase
 
             $this->assertTrue($a->greaterThan($b));
         }
-
-        // true
-        $a = Integer::createByInt(1500);
-        $b = Integer::createByInt(1492);
-        $this->assertTrue($a->greaterThan($b));
     }
 
     public function testStringLength()

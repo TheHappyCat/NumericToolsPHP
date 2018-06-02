@@ -226,8 +226,6 @@ class Integer extends Number
                         return true;
                     }
                 }
-
-                return false;
             }
             // if the length of both numbers is not the same
             else {
