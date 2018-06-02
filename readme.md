@@ -82,7 +82,15 @@ $quotient = $dividend->divideBy($divisor);
 
 ### Modulo
 
+```php
+<?php
 
+$dividend = Integer::createByString("1234567890123456789");
+$divisor = Integer::createByString("9876543210");
+
+// $module = 8626543209
+$module = $dividend->mod($divisor);
+```
 
 ### Greater than
 
