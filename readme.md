@@ -94,6 +94,21 @@ $module = $dividend->mod($divisor);
 
 ### Greater than
 
+```php
+<?php
 
+$a = Integer::createByString("123456789012345678901234567890");
+$b = Integer::createByString("987654321");
+
+// true
+$comparison = $a->greaterThan($b);
+
+$a = Integer::createByString("987654321");
+$b = Integer::createByString("123456789012345678901234567890");
+
+// false
+$comparison = $a->greaterThan($b);
+
+```
 
 ### Greater or equal to
