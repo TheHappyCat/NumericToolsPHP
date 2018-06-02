@@ -16,6 +16,8 @@ class IntegerTest extends TestCase
     {
         $this->assertNotTrue(NumberValidations::stringIsInteger(''));
 
+        $this->assertNotTrue(NumberValidations::stringIsInteger('abc123'));
+
         $this->assertNotTrue(NumberValidations::stringIsInteger('-0123'));
 
         $this->assertNotTrue(NumberValidations::stringIsInteger('-0'));
@@ -37,6 +39,13 @@ class IntegerTest extends TestCase
         $this->assertTrue(NumberValidations::stringIsInteger('123456789876543212345678987654321'));
         
         $this->assertTrue(NumberValidations::stringIsInteger('12345678987654321'));
+    }
+
+    public function testInvalidNumberException()
+    {
+        $this->expectException(Exception::class);
+
+        Integer::createByString('abc123');
     }
 
     public function testCreateDefault()

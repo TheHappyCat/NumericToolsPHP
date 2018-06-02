@@ -43,10 +43,19 @@ class NumberValidations
             }
         }
 
-        $numericDigits = range(0, 9, 1);
+        $digits = range(0, 9, 1);
 
-        foreach ($chars as $currentDigit) {
-            if (!in_array($currentDigit, $numericDigits)) {
+        foreach ($chars as $currentChar) {
+            $found = false;
+
+            foreach ($digits as $currentDigit) {
+                if ($currentChar === "" . $currentDigit) {
+                    $found = true;
+                    break;
+                }
+            }
+
+            if (!$found) {
                 return false;
             }
         }
