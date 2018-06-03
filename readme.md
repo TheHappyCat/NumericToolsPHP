@@ -121,6 +121,12 @@ $b = Integer::createByString("1492");
 // true
 $comparison = $a->greaterOrEqualTo($b);
 
+$a = Integer::createByString("1234567890");
+$b = Integer::createByString("1234567890");
+
+// true
+$comparison = $a->greaterOrEqualTo($b);
+
 $a = Integer::createByString("1234");
 $b = Integer::createByString("1234567890");
 
