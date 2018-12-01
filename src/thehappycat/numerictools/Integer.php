@@ -20,6 +20,7 @@ class Integer extends Number
 
     /**
      * @param int $value
+     * @return Integer
      */
     public static function createByInt(int $value)
     {
@@ -44,6 +45,8 @@ class Integer extends Number
 
     /**
      * @param string $value
+     * @return Integer
+     * @throws Exception
      */
     public static function createByString(string $value)
     {
@@ -54,6 +57,7 @@ class Integer extends Number
 
     /**
      * @param string $value
+     * @throws Exception
      */
     public function setStringValue(string $value)
     {
@@ -123,8 +127,9 @@ class Integer extends Number
     }
 
     /**
-     * @param \TheHappyCat\NumericTools\Integer $number
-     * @return \TheHappyCat\NumericTools\Integer
+     * @param Integer $number
+     * @return Integer
+     * @throws Exception
      */
     public function add(Integer $number)
     {
@@ -166,7 +171,7 @@ class Integer extends Number
     }
 
     /**
-     * @param \TheHappyCat\NumericTools\Integer $number
+     * @param Integer $number
      * @return bool
      */
     public function greaterOrEqualTo(Integer $number)
@@ -180,7 +185,7 @@ class Integer extends Number
     }
 
     /**
-     * @param \TheHappyCat\NumericTools\Integer $number
+     * @param Integer $number
      * @return bool
      */
     public function greaterThan(Integer $number)
@@ -235,8 +240,9 @@ class Integer extends Number
     }
 
     /**
-     * @param \TheHappyCat\NumericTools\Integer $number
-     * @return \TheHappyCat\NumericTools\Integer
+     * @param Integer $number
+     * @return Integer
+     * @throws Exception
      */
     public function subtract(Integer $number)
     {
@@ -301,8 +307,8 @@ class Integer extends Number
     }
 
     /**
-     * @param \TheHappyCat\NumericTools\Integer $number
-     * @return \TheHappyCat\NumericTools\Integer
+     * @param Integer $number
+     * @return Integer
      * @throws Exception
      */
     public function multiplyBy(Integer $number)
@@ -331,7 +337,7 @@ class Integer extends Number
 
     /**
      * @param int $number
-     * @return \TheHappyCat\NumericTools\Integer
+     * @return Integer
      * @throws Exception
      */
     public function multiplyByInt(int $number)
@@ -392,8 +398,8 @@ class Integer extends Number
     }
 
     /**
-     * @param \TheHappyCat\NumericTools\Integer $divisor
-     * @return \TheHappyCat\NumericTools\Integer
+     * @param Integer $divisor
+     * @return Integer
      * @throws Exception
      */
     public function getMaximumMultiplier(Integer $divisor)
