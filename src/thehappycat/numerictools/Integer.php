@@ -208,8 +208,10 @@ class Integer extends Number
                 }
 
                 // both numbers have the same length, they are not equal and their first digit is equal
-
-                for ($i = 1; $i < sizeof($this->value); $i++) {
+                
+                $numberLength = sizeof($this->value);
+                
+                for ($i = 1; $i < $numberLength; $i++) {
                     $a0 = $this->value[$i - 1];
                     $a = $this->value[$i];
 
