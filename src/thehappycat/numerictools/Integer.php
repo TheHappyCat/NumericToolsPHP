@@ -20,7 +20,7 @@ class Integer extends Number
 
     /**
      * @param int $value
-     * @return Integer
+     * @return TheHappyCat\NumericTools\Integer
      */
     public static function createByInt(int $value)
     {
