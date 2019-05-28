@@ -127,7 +127,7 @@ class Integer extends Number
     }
 
     /**
-     * @param Integer $number
+     * @param \TheHappyCat\NumericTools\Integer $number
      * @return \TheHappyCat\NumericTools\Integer
      * @throws Exception
      */
@@ -434,9 +434,9 @@ class Integer extends Number
     }
 
     /**
-     * @param Integer $divisor
+     * @param \TheHappyCat\NumericTools\Integer $divisor
      * @param bool $modMode
-     * @return Integer
+     * @return \TheHappyCat\NumericTools\Integer
      * @throws Exception
      */
     public function divideBy(Integer $divisor, $modMode = false)
