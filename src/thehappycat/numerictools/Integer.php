@@ -128,7 +128,7 @@ class Integer extends Number
 
     /**
      * @param Integer $number
-     * @return Integer
+     * @return \TheHappyCat\NumericTools\Integer
      * @throws Exception
      */
     public function add(Integer $number)
@@ -169,7 +169,7 @@ class Integer extends Number
     }
 
     /**
-     * @param Integer $number
+     * @param \TheHappyCat\NumericTools\Integer $number
      * @return bool
      */
     public function greaterOrEqualTo(Integer $number)
@@ -182,7 +182,7 @@ class Integer extends Number
     }
 
     /**
-     * @param Integer $number
+     * @param \TheHappyCat\NumericTools\Integer $number
      * @return bool
      */
     public function greaterThan(Integer $number)
@@ -237,8 +237,8 @@ class Integer extends Number
     }
 
     /**
-     * @param Integer $number
-     * @return Integer
+     * @param \TheHappyCat\NumericTools\Integer $number
+     * @return \TheHappyCat\NumericTools\Integer
      * @throws Exception
      */
     public function subtract(Integer $number)
@@ -302,8 +302,8 @@ class Integer extends Number
     }
 
     /**
-     * @param Integer $number
-     * @return Integer
+     * @param \TheHappyCat\NumericTools\Integer $number
+     * @return \TheHappyCat\NumericTools\Integer
      * @throws Exception
      */
     public function multiplyBy(Integer $number)
@@ -332,7 +332,7 @@ class Integer extends Number
 
     /**
      * @param int $number
-     * @return Integer
+     * @return \TheHappyCat\NumericTools\Integer
      * @throws Exception
      */
     public function multiplyByInt(int $number)
@@ -391,8 +391,8 @@ class Integer extends Number
     }
 
     /**
-     * @param Integer $divisor
-     * @return Integer
+     * @param \TheHappyCat\NumericTools\Integer $divisor
+     * @return \TheHappyCat\NumericTools\Integer
      * @throws Exception
      */
     public function getMaximumMultiplier(Integer $divisor)
@@ -424,8 +424,8 @@ class Integer extends Number
     }
 
     /**
-     * @param Integer $divisor
-     * @return Integer
+     * @param \TheHappyCat\NumericTools\Integer $divisor
+     * @return \TheHappyCat\NumericTools\Integer
      * @throws Exception
      */
     public function mod(Integer $divisor)
