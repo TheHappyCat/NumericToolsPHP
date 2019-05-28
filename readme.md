@@ -1,6 +1,6 @@
 ![alt text](https://raw.githubusercontent.com/TheHappyCat/NumericTools/master/assets/mathematical.gif "Mathematical")
 
-# *NumericToolsPHP* [![Build Status](https://travis-ci.org/TheHappyCat/NumericToolsPHP.svg?branch=master)](https://travis-ci.org/TheHappyCat/NumericToolsPHP) [![codecov](https://codecov.io/gh/TheHappyCat/NumericToolsPHP/branch/master/graph/badge.svg)](https://codecov.io/gh/TheHappyCat/NumericToolsPHP)
+# *NumericToolsPHP* [![Build Status](https://travis-ci.org/TheHappyCat/NumericToolsPHP.svg?branch=master)](https://travis-ci.org/TheHappyCat/NumericToolsPHP) [![codecov](https://codecov.io/gh/TheHappyCat/NumericToolsPHP/branch/master/graph/badge.svg)](https://codecov.io/gh/TheHappyCat/NumericToolsPHP) [![Total Downloads](https://poser.pugx.org/thehappycat/numerictools/downloads)](https://packagist.org/packages/thehappycat/numerictools) [![License](https://poser.pugx.org/thehappycat/numerictools/license)](https://packagist.org/packages/thehappycat/numerictools)
 
 ## A simple project created to handle large numeric operations in PHP!
 
