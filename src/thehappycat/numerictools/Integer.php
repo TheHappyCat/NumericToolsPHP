@@ -45,7 +45,7 @@ class Integer extends Number
 
     /**
      * @param string $value
-     * @return Integer
+     * @return \TheHappyCat\NumericTools\Integer
      * @throws Exception
      */
     public static function createByString(string $value)
