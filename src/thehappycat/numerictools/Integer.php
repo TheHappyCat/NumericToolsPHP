@@ -153,13 +153,11 @@ class Integer extends Number
                 if ($i === 0) {
                     $carry = 0;
                     $subResult = $intResult;
-                }
-                else {
+                } else {
                     $carry = intval($stringResult[0]);
                     $subResult = intval($stringResult[1]);
                 }
-            }
-            else {
+            } else {
                 $carry = 0;
                 $subResult = intval($stringResult[0]);
             }
@@ -178,8 +176,7 @@ class Integer extends Number
     {
         if ($this->greaterThan($number)) {
             return true;
-        }
-        else {
+        } else {
             return ($this->getStringValue() === $number->getStringValue());
         }
     }
@@ -231,9 +228,7 @@ class Integer extends Number
                         return true;
                     }
                 }
-            }
-            // if the length of both numbers is not the same
-            else {
+            } else {
                 return $comparison === 1;
             }
         }
@@ -284,15 +279,13 @@ class Integer extends Number
             if (($i - $indexDiff) < 0) {
                 $intResult = $currentTop - $carry < 0 ? 9 : $currentTop - $carry;
                 $carry = $currentTop - $carry < 0 ? 1 : 0;
-            }
-            else {
+            } else {
                 $currentBottom = $bottom[$i - $indexDiff];
 
                 if ($currentTop - $carry >= $currentBottom) {
                     $intResult = $currentTop - $carry - $currentBottom;
                     $carry = 0;
-                }
-                else {
+                } else {
                     $intResult = $currentTop - $carry < 0 ? 9 - $currentBottom : intval('1' . ($currentTop - $carry)) - $currentBottom;
                     $carry = 1;
                 }
@@ -359,13 +352,11 @@ class Integer extends Number
                 if ($i === 0) {
                     $carry = 0;
                     $subResult = $intResult;
-                }
-                else {
+                } else {
                     $carry = intval($stringResult[0]);
                     $subResult = intval($stringResult[1]);
                 }
-            }
-            else {
+            } else {
                 $carry = 0;
                 $subResult = intval($stringResult[0]);
             }
@@ -421,8 +412,7 @@ class Integer extends Number
                 return $multiplier->subtract(
                     Integer::createByInt(1)
                 );
-            }
-            else {
+            } else {
                 $multiplier = $multiplier->add(
                     Integer::createByInt(1)
                 );
@@ -474,8 +464,7 @@ class Integer extends Number
             );
 
             $currentIndex = $divisor->getLength() + 1;
-        }
-        else {
+        } else {
             $currentIndex = $divisor->getLength();
         }
 
