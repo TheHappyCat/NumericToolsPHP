@@ -137,30 +137,22 @@ class Integer extends Number
 
         $top = $comparison === 0 ? $this->value : ($comparison === -1 ? $number->value : $this->value);
         $bottom = $comparison === 0 ? $number->value : ($comparison === -1 ? $this->value : $number->value);
-
-        $indexDiff = sizeof($top) - sizeof($bottom);
+        
+        $topNumberLength = sizeof($top);
+        
+        $indexDiff = $topNumberLength - sizeof($bottom);
 
         $stringHolder = '';
 
         $carry = 0;
 
-        for ($i = sizeof($top) - 1; $i >= 0; $i--) {
+        for ($i = $topNumberLength - 1; $i >= 0; $i--) {
             $intResult = ($i - $indexDiff) < 0 ? ($top[$i] + $carry) : ($top[$i] + $bottom[$i - $indexDiff] + $carry);
 
             $stringResult = (string) $intResult;
-
-            if (strlen($stringResult) === 2) {
-                if ($i === 0) {
-                    $carry = 0;
-                    $subResult = $intResult;
-                } else {
-                    $carry = intval($stringResult[0]);
-                    $subResult = intval($stringResult[1]);
-                }
-            } else {
-                $carry = 0;
-                $subResult = intval($stringResult[0]);
-            }
+            
+            $carry = strlen($stringResult) === 2 ? ($i === 0 ? 0 : intval($stringResult[0])) : 0;
+            $subResult = strlen($stringResult) === 2 ? ($i === 0 ? $intResult : intval($stringResult[1])) : intval($stringResult[0]);
 
             $stringHolder = $subResult . $stringHolder;
         }
