@@ -2,6 +2,9 @@
 
 use Exception;
 
+use TheHappyCat\NumericTools\Operators\Addition\Addition;
+use TheHappyCat\NumericTools\Operators\Addition\IntegerAddition;
+
 /**
  * Class Integer
  * @package TheHappyCat\NumericTools
