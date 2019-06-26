@@ -108,8 +108,10 @@ class IntegerTest extends TestCase
     public function testAdd()
     {
         $baseValue = 9999;
+        var_dump($baseValue);
 
         $a = Integer::createByInt($baseValue);
+        var_dump($a);
 
         for ($i = 0; $i < $baseValue; $i++) {
             $numericAddition = $baseValue + $i;
