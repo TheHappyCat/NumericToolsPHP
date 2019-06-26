@@ -2,10 +2,14 @@
 
 require_once __DIR__ . '/../src/thehappycat/numerictools/Integer.php';
 require_once __DIR__ . '/../src/thehappycat/numerictools/NumberValidations.php';
+require_once __DIR__ . '/../src/thehappycat/numerictools/Operators/Addition/Addition.php';
+require_once __DIR__ . '/../src/thehappycat/numerictools/Operators/Addition/IntegerAddition.php';
 
 use PHPUnit\Framework\TestCase;
 use TheHappyCat\NumericTools\Integer;
 use TheHappyCat\NumericTools\NumberValidations;
+use TheHappyCat\NumericTools\Operators\Addition\Addition;
+use TheHappyCat\NumericTools\Operators\Addition\IntegerAddition;
 
 /**
  * Class IntegerTest
@@ -35,9 +39,9 @@ class IntegerTest extends TestCase
         $this->assertTrue(NumberValidations::stringIsInteger('1'));
 
         $this->assertTrue(NumberValidations::stringIsInteger('1980'));
-        
+
         $this->assertTrue(NumberValidations::stringIsInteger('123456789876543212345678987654321'));
-        
+
         $this->assertTrue(NumberValidations::stringIsInteger('12345678987654321'));
     }
 
@@ -114,15 +118,15 @@ class IntegerTest extends TestCase
             $this->assertEquals('' . $numericAddition, strval($b));
         }
     }
-    
+
     public function testLargeAddition()
     {
         $a = Integer::createByString('1234567898765432123456789876543212345678987654321');
         $b = Integer::createByString('987654321234567898765432123456789');
         $c = $a->add($b);
-        
+
         $expectedResult = '1234567898765433111111111111111111111111111111110';
-        
+
         $this->assertEquals($expectedResult, strval($c));
     }
 
@@ -136,26 +140,26 @@ class IntegerTest extends TestCase
             $this->assertEquals('' . $baseValue - $i, strval($a->subtract(Integer::createByInt($i))));
         }
     }
-    
+
     public function testLargeSubtraction()
     {
         $a = Integer::createByString('1234567898765432123456789876543212345678987654321');
         $b = Integer::createByString('987654321234567898765432123456789');
         $c = $a->subtract($b);
-        
+
         $expectedResult = '1234567898765431135802468641975313580246864197532';
-        
+
         $this->assertEquals($expectedResult, strval($c));
     }
-    
+
     public function testNegativeSubtraction()
     {
         $a = Integer::createByString('1234567898765432123456789876543212345678987654321');
         $b = Integer::createByString('-987654321234567898765432123456789');
         $c = $a->subtract($b);
-        
+
         $expectedResult = '1234567898765433111111111111111111111111111111110';
-        
+
         $this->assertEquals($expectedResult, strval($c));
     }
 
@@ -169,15 +173,15 @@ class IntegerTest extends TestCase
             $this->assertEquals('' . $baseValue - $i, strval($a->subtract(Integer::createByInt($i))));
         }
     }
-    
+
     public function testLargeNegativeSubtraction()
     {
         $a = Integer::createByString('987654321234567898765432123456789');
         $b = Integer::createByString('1234567898765432123456789876543212345678987654321');
         $c = $a->subtract($b);
-        
+
         $expectedResult = '-1234567898765431135802468641975313580246864197532';
-        
+
         $this->assertEquals($expectedResult, strval($c));
     }
 
@@ -189,13 +193,13 @@ class IntegerTest extends TestCase
 
         $this->assertEquals('492', strval($result));
     }
-    
+
     public function testMultiplyByIntException()
     {
         $number = Integer::createByString('123');
-        
+
         $this->expectException(Exception::class);
-        
+
         $result = $number->multiplyByInt(10);
     }
 
@@ -373,12 +377,12 @@ class IntegerTest extends TestCase
         $multiplier = $dividend->getMaximumMultiplier($divisor);
         $this->assertEquals('2', $multiplier);
     }
-    
+
     public function testMaxMultiplierException()
     {
         $dividend = Integer::createByInt(10);
         $divisor = Integer::createByInt(40);
-        
+
         $this->expectException(Exception::class);
 
         $multiplier = $dividend->getMaximumMultiplier($divisor);
@@ -525,7 +529,7 @@ class IntegerTest extends TestCase
 
         $dividend->divideBy($divisor);
     }
-    
+
     public function testDivisionByBiggerDivisorException()
     {
         $dividend = Integer::createByString('10');
@@ -535,7 +539,7 @@ class IntegerTest extends TestCase
 
         $dividend->divideBy($divisor);
     }
-    
+
     public function testSeveralDivisions()
     {
         $initialIndex = 2;
