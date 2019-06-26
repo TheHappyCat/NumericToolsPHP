@@ -42,7 +42,6 @@ class Integer extends Number
         $instance = new self();
         $instance->setIntValue($value);
         $instance->setAdditionHandler(new IntegerAddition());
-        var_dump($instance);
         return $instance;
     }
 
