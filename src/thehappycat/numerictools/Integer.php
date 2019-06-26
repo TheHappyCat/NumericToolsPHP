@@ -29,7 +29,7 @@ class Integer extends Number
     /**
      * @param Addition $additionHandler
      */
-    public function setAdditionHandler(Addition $additionHandler) {
+    public function setAdditionHandler($additionHandler) {
         $this->additionHandler = $additionHandler;
     }
 
