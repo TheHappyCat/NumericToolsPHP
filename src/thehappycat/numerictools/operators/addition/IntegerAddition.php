@@ -10,7 +10,9 @@ class IntegerAddition implements Addition
     /**
      * @param \TheHappyCat\NumericTools\Integer $a
      * @param \TheHappyCat\NumericTools\Integer $b
+     *
      * @return \TheHappyCat\NumericTools\Integer
+     *
      * @throws Exception
      */
     public function add(Integer $a, Integer $b)
