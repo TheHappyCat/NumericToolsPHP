@@ -13,7 +13,7 @@ class IntegerAddition implements Addition
      * @return \TheHappyCat\NumericTools\Integer
      * @throws Exception
      */
-    public function add($a, $b)
+    public function add(Integer $a, Integer $b)
     {
         $comparison = sizeof($a->value) <=> sizeof($b->value);
 
