@@ -24,7 +24,7 @@ before_script:
     - composer install --prefer-dist --ignore-platform-reqs
 
 script:
-    - ./vendor/bin/phpunit tests/ --coverage-clover=coverage.xml
+    - ./vendor/bin/phpunit --debug tests/ --coverage-clover=coverage.xml
 
 after_success:
     - bash <(curl -s https://codecov.io/bash) || echo 'Codecov failed to upload'
