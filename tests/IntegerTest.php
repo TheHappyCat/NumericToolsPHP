@@ -2,8 +2,8 @@
 
 require_once __DIR__ . '/../src/thehappycat/numerictools/Integer.php';
 require_once __DIR__ . '/../src/thehappycat/numerictools/NumberValidations.php';
-require_once __DIR__ . '/../src/thehappycat/numerictools/Operators/Addition/Addition.php';
-require_once __DIR__ . '/../src/thehappycat/numerictools/Operators/Addition/IntegerAddition.php';
+require_once __DIR__ . '/../src/thehappycat/numerictools/operators/addition/Addition.php';
+require_once __DIR__ . '/../src/thehappycat/numerictools/operators/addition/IntegerAddition.php';
 
 use PHPUnit\Framework\TestCase;
 use TheHappyCat\NumericTools\Integer;
