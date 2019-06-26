@@ -19,6 +19,18 @@ class Integer extends Number
     private $negative = false;
 
     /**
+     * @var Addition
+     */
+    private $additionHandler;
+
+    /**
+     * @param Addition $additionHandler
+     */
+    public function setAdditionHandler(Addition $additionHandler) {
+        $this->additionHandler = $additionHandler;
+    }
+
+    /**
      * @param int $value
      * @return \TheHappyCat\NumericTools\Integer
      */
@@ -26,6 +38,7 @@ class Integer extends Number
     {
         $instance = new self();
         $instance->setIntValue($value);
+        $instance->setAdditionHandler(new IntegerAddition());
         return $instance;
     }
 
@@ -52,6 +65,7 @@ class Integer extends Number
     {
         $instance = new self();
         $instance->setStringValue($value);
+        $instance->setAdditionHandler(new IntegerAddition());
         return $instance;
     }
 
@@ -133,39 +147,11 @@ class Integer extends Number
      */
     public function add(Integer $number)
     {
-        $comparison = sizeof($this->value) <=> sizeof($number->value);
-
-        $top = $comparison === 0 ? $this->value : ($comparison === -1 ? $number->value : $this->value);
-        $bottom = $comparison === 0 ? $number->value : ($comparison === -1 ? $this->value : $number->value);
-
-        $indexDiff = sizeof($top) - sizeof($bottom);
-
-        $stringHolder = '';
-
-        $carry = 0;
-
-        for ($i = sizeof($top) - 1; $i >= 0; $i--) {
-            $intResult = ($i - $indexDiff) < 0 ? ($top[$i] + $carry) : ($top[$i] + $bottom[$i - $indexDiff] + $carry);
-
-            $stringResult = (string) $intResult;
-
-            if (strlen($stringResult) === 2) {
-                if ($i === 0) {
-                    $carry = 0;
-                    $subResult = $intResult;
-                } else {
-                    $carry = intval($stringResult[0]);
-                    $subResult = intval($stringResult[1]);
-                }
-            } else {
-                $carry = 0;
-                $subResult = intval($stringResult[0]);
-            }
-
-            $stringHolder = $subResult . $stringHolder;
+        if ($this->additionHandler === null) {
+            throw new Exception("Addition handler not setup");
         }
 
-        return Integer::createByString($stringHolder);
+        return $this->additionHandler->add($this, $number);
     }
 
     /**
@@ -208,9 +194,9 @@ class Integer extends Number
                 }
 
                 // both numbers have the same length, they are not equal and their first digit is equal
-                
+
                 $numberLength = sizeof($this->value);
-                
+
                 for ($i = 1; $i < $numberLength; $i++) {
                     $a0 = $this->value[$i - 1];
                     $a = $this->value[$i];
