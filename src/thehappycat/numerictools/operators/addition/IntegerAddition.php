@@ -2,7 +2,7 @@
 
 use Exception;
 
-use TheHappyCat\NumericTools\Operators\Addition;
+use TheHappyCat\NumericTools\Operators\Addition\Addition;
 use TheHappyCat\NumericTools\Integer;
 
 class IntegerAddition implements Addition
