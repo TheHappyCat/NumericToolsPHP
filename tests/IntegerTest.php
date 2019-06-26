@@ -114,6 +114,7 @@ class IntegerTest extends TestCase
         for ($i = 0; $i < $baseValue; $i++) {
             $numericAddition = $baseValue + $i;
             $b = $a->add(Integer::createByInt($i));
+            var_dump($b);
 
             $this->assertEquals('' . $numericAddition, strval($b));
         }
