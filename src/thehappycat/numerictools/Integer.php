@@ -14,7 +14,7 @@ class Integer extends Number
     /**
      * @var array
      */
-    private $value = [];
+    public $value = [];
 
     /**
      * @var bool

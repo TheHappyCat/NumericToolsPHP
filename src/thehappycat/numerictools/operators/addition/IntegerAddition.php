@@ -2,18 +2,18 @@
 
 use Exception;
 
-use TheHappyCat\NumericTools\Operators\Addition\Addition;
 use TheHappyCat\NumericTools\Integer;
+use TheHappyCat\NumericTools\Number;
 
 class IntegerAddition implements Addition
 {
     /**
-     * @param \TheHappyCat\NumericTools\Integer $a
-     * @param \TheHappyCat\NumericTools\Integer $b
+     * @param \TheHappyCat\NumericTools\Number $a
+     * @param \TheHappyCat\NumericTools\Number $b
      * @return \TheHappyCat\NumericTools\Integer
      * @throws Exception
      */
-    public function add(Integer $a, Integer $b)
+    public function add(Number $a, Number $b)
     {
         $comparison = sizeof($a->value) <=> sizeof($b->value);
 

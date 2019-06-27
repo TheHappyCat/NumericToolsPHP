@@ -1,12 +1,12 @@
 <?php namespace TheHappyCat\NumericTools\Operators\Addition;
 
-use TheHappyCat\NumericTools\Integer;
+use TheHappyCat\NumericTools\Number;
 
 interface Addition
 {
   /**
-   * @param \TheHappyCat\NumericTools\Integer $a
-   * @param \TheHappyCat\NumericTools\Integer $b
+   * @param \TheHappyCat\NumericTools\Number $a
+   * @param \TheHappyCat\NumericTools\Number $b
    */
-    public function add(Integer $a, Integer $b);
+    public function add(Number $a, Number $b);
 }
