@@ -2,6 +2,10 @@
 
 use TheHappyCat\NumericTools\Number;
 
+/**
+ * Interface Addition
+ * @package TheHappyCat\NumericTools\Operators\Addition
+ */
 interface Addition
 {
   /**

@@ -5,6 +5,10 @@ use Exception;
 use TheHappyCat\NumericTools\Integer;
 use TheHappyCat\NumericTools\Number;
 
+/**
+ * Class IntegerAddition
+ * @package TheHappyCat\NumericTools\Operators\Addition
+ */
 class IntegerAddition implements Addition
 {
     /**
