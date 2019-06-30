@@ -3,14 +3,15 @@
 use TheHappyCat\NumericTools\Number;
 
 /**
- * Interface Addition
+ * Interface AdditionInterface
  * @package TheHappyCat\NumericTools\Operators\Addition
  */
-interface Addition
+interface AdditionInterface
 {
-  /**
-   * @param \TheHappyCat\NumericTools\Number $a
-   * @param \TheHappyCat\NumericTools\Number $b
-   */
+    /**
+     * @param Number $a
+     * @param Number $b
+     * @return \TheHappyCat\NumericTools\Integer
+     */
     public function add(Number $a, Number $b);
 }

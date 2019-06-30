@@ -9,11 +9,11 @@ use TheHappyCat\NumericTools\Number;
  * Class IntegerAddition
  * @package TheHappyCat\NumericTools\Operators\Addition
  */
-class IntegerAddition implements Addition
+class IntegerAddition implements AdditionInterface
 {
     /**
-     * @param \TheHappyCat\NumericTools\Number $a
-     * @param \TheHappyCat\NumericTools\Number $b
+     * @param Number $a
+     * @param Number $b
      * @return \TheHappyCat\NumericTools\Integer
      * @throws Exception
      */

@@ -2,8 +2,10 @@
 
 use Exception;
 
-use TheHappyCat\NumericTools\Operators\Addition\Addition;
+use TheHappyCat\NumericTools\Operators\Addition\AdditionInterface;
 use TheHappyCat\NumericTools\Operators\Addition\IntegerAddition;
+
+use TheHappyCat\NumericTools\Utils\NumericStringUtils;
 
 /**
  * Class Integer
@@ -22,12 +24,12 @@ class Integer extends Number
     private $negative = false;
 
     /**
-     * @var Addition
+     * @var AdditionInterface
      */
     private $additionHandler;
 
     /**
-     * @param Addition $additionHandler
+     * @param AdditionInterface $additionHandler
      */
     public function setAdditionHandler($additionHandler) {
         $this->additionHandler = $additionHandler;
@@ -151,7 +153,7 @@ class Integer extends Number
     public function add(Integer $number)
     {
         if ($this->additionHandler === null) {
-            throw new Exception("Addition handler not setup");
+            throw new Exception("AdditionInterface handler not setup");
         }
 
         return $this->additionHandler->add($this, $number);
@@ -286,7 +288,7 @@ class Integer extends Number
         }
 
         return Integer::createByString(
-            $negative ? '-' . $this->purgeZeros($stringHolder) : $this->purgeZeros($stringHolder)
+            $negative ? '-' . NumericStringUtils::purgeZeros($stringHolder) : NumericStringUtils::purgeZeros($stringHolder)
         );
     }
 
@@ -309,7 +311,7 @@ class Integer extends Number
 
             $subResult = $top->multiplyByInt($bottom[$i]);
 
-            $subResultWithZeros = $this->purgeZeros($subResult->getStringValue() . str_repeat('0', $delta));
+            $subResultWithZeros = NumericStringUtils::purgeZeros($subResult->getStringValue() . str_repeat('0', $delta));
 
             $result = $result->add(
                 Integer::createByString($subResultWithZeros)
@@ -356,27 +358,8 @@ class Integer extends Number
         }
 
         return Integer::createByString(
-            $this->purgeZeros($stringHolder)
+            NumericStringUtils::purgeZeros($stringHolder)
         );
-    }
-
-    /**
-     * @param string $numericString
-     * @return string
-     */
-    private function purgeZeros(string $numericString)
-    {
-        if ($numericString[0] === '0') {
-            for ($i = 0; $i < strlen($numericString) - 1; $i++) {
-                if ($numericString[$i] !== '0') {
-                    break;
-                }
-            }
-
-            $numericString = substr_replace($numericString, '', 0, $i);
-        }
-
-        return $numericString;
     }
 
     /**
@@ -466,7 +449,7 @@ class Integer extends Number
 
         while ($currentIndex < $this->getLength()) {
             $currentSelection = Integer::createByString(
-                $this->purgeZeros(
+                NumericStringUtils::purgeZeros(
                     $remainder->getStringValue() . implode('', array_slice($this->value, $currentIndex, 1))
                 )
             );

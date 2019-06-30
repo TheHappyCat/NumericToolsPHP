@@ -2,13 +2,13 @@
 
 require_once __DIR__ . '/../src/thehappycat/numerictools/Integer.php';
 require_once __DIR__ . '/../src/thehappycat/numerictools/NumberValidations.php';
-require_once __DIR__ . '/../src/thehappycat/numerictools/operators/addition/Addition.php';
+require_once __DIR__ . '/../src/thehappycat/numerictools/operators/addition/AdditionInterface.php';
 require_once __DIR__ . '/../src/thehappycat/numerictools/operators/addition/IntegerAddition.php';
 
 use PHPUnit\Framework\TestCase;
 use TheHappyCat\NumericTools\Integer;
 use TheHappyCat\NumericTools\NumberValidations;
-use TheHappyCat\NumericTools\Operators\Addition\Addition;
+use TheHappyCat\NumericTools\Operators\Addition\AdditionInterface;
 use TheHappyCat\NumericTools\Operators\Addition\IntegerAddition;
 
 /**
