@@ -2,7 +2,7 @@
 
 /**
  * Class NumericStringUtils
- * @package TheHappyCat\NumericTools\utils
+ * @package TheHappyCat\NumericTools\Utils
  */
 class NumericStringUtils
 {
