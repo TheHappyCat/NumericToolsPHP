@@ -642,6 +642,41 @@ class Integer extends Number
     }
 
     /**
+     * Brute force primality test - tests every possible divisor
+     * WARNING: Extremely slow for large numbers!
+     * 
+     * @return bool
+     */
+    public function isPrimeBruteForce(): bool
+    {
+        if ($this->isNegative() || $this->isZero() || $this->getStringValue() === '1') {
+            return false;
+        }
+        
+        if ($this->getStringValue() === '2' || $this->getStringValue() === '3') {
+            return true;
+        }
+        
+        // Check if even
+        if ($this->mod(Integer::createByInt(2))->isZero()) {
+            return false;
+        }
+        
+        $sqrt = $this->sqrt();
+        $divisor = Integer::createByInt(3);
+        
+        // Test odd divisors up to √n
+        while ($divisor->lessThanOrEqualTo($sqrt)) {
+            if ($this->mod($divisor)->isZero()) {
+                return false; // Found a divisor
+            }
+            $divisor = $divisor->add(Integer::createByInt(2));
+        }
+        
+        return true; // No divisors found
+    }
+
+    /**
      * Check if this number is less than or equal to another number
      * 
      * @param Integer $number
