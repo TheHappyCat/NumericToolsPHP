@@ -640,4 +640,105 @@ class Integer extends Number
         // For larger numbers, use probabilistic test
         return $this->isProbablePrime(20);
     }
+
+    /**
+     * Check if this number is less than or equal to another number
+     * 
+     * @param Integer $number
+     * @return bool
+     */
+    public function lessThanOrEqualTo(Integer $number): bool
+    {
+        return !$this->greaterThan($number);
+    }
+
+    /**
+     * Check if this number equals another number
+     * 
+     * @param Integer $number
+     * @return bool
+     */
+    public function equals(Integer $number): bool
+    {
+        return $this->getStringValue() === $number->getStringValue();
+    }
+
+    /**
+     * Calculate the square root of this number (integer part only)
+     * 
+     * @return Integer
+     */
+    public function sqrt(): Integer
+    {
+        if ($this->isNegative()) {
+            throw new Exception("Cannot calculate square root of negative number");
+        }
+        
+        if ($this->isZero() || $this->getStringValue() === '1') {
+            return $this;
+        }
+        
+        // Use binary search to find square root
+        $left = Integer::createByInt(1);
+        $right = $this;
+        $result = Integer::createByInt(1);
+        
+        while ($left->lessThanOrEqualTo($right)) {
+            $mid = $left->add($right)->divideBy(Integer::createByInt(2));
+            $square = $mid->multiplyBy($mid);
+            
+            if ($square->lessThanOrEqualTo($this)) {
+                $result = $mid;
+                $left = $mid->add(Integer::createByInt(1));
+            } else {
+                $right = $mid->subtract(Integer::createByInt(1));
+            }
+        }
+        
+        return $result;
+    }
+
+    /**
+     * Check if this number is a power of 2
+     * 
+     * @return bool
+     */
+    public function isPowerOfTwo(): bool
+    {
+        if ($this->isZero() || $this->isNegative()) {
+            return false;
+        }
+        
+        $n = $this;
+        while (!$n->isZero() && !$n->equals(Integer::createByInt(1))) {
+            if (!$n->mod(Integer::createByInt(2))->isZero()) {
+                return false;
+            }
+            $n = $n->divideBy(Integer::createByInt(2));
+        }
+        
+        return true;
+    }
+
+    /**
+     * Get the power of 2 if this number is a power of 2
+     * 
+     * @return Integer|null
+     */
+    public function getPowerOfTwo(): ?Integer
+    {
+        if (!$this->isPowerOfTwo()) {
+            return null;
+        }
+        
+        $power = Integer::createByInt(0);
+        $n = $this;
+        
+        while (!$n->equals(Integer::createByInt(1))) {
+            $power = $power->add(Integer::createByInt(1));
+            $n = $n->divideBy(Integer::createByInt(2));
+        }
+        
+        return $power;
+    }
 }
