@@ -1,7 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../src/thehappycat/numerictools/Integer.php';
-require_once __DIR__ . '/../src/thehappycat/numerictools/NumberValidations.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use TheHappyCat\NumericTools\Integer;
 

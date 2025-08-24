@@ -1,10 +1,38 @@
 ![alt text](https://raw.githubusercontent.com/TheHappyCat/NumericTools/master/assets/mathematical.gif "Mathematical")
 
-# *NumericToolsPHP* [![Build Status](https://travis-ci.org/TheHappyCat/NumericToolsPHP.svg?branch=master)](https://travis-ci.org/TheHappyCat/NumericToolsPHP) [![codecov](https://codecov.io/gh/TheHappyCat/NumericToolsPHP/branch/master/graph/badge.svg)](https://codecov.io/gh/TheHappyCat/NumericToolsPHP) [![Total Downloads](https://poser.pugx.org/thehappycat/numerictools/downloads)](https://packagist.org/packages/thehappycat/numerictools) [![License](https://poser.pugx.org/thehappycat/numerictools/license)](https://packagist.org/packages/thehappycat/numerictools) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/TheHappyCat/NumericToolsPHP/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/TheHappyCat/NumericToolsPHP/?branch=master)
+# *NumericToolsPHP* [![Total Downloads](https://poser.pugx.org/thehappycat/numerictools/downloads)](https://packagist.org/packages/thehappycat/numerictools) [![License](https://poser.pugx.org/thehappycat/numerictools/license)](https://packagist.org/packages/thehappycat/numerictools)
 
 ## A simple project created to handle large numeric operations in PHP!
 
 Just like the normal numeric operations you would usually do, but with numbers of any size.
+
+## Requirements
+
+- **PHP**: 8.0 or higher (tested with PHP 8.4)
+- **Composer**: For dependency management
+
+## Installation
+
+### Via Composer (Recommended)
+
+```bash
+composer require thehappycat/numerictools
+```
+
+### Manual Installation
+
+1. Clone this repository:
+```bash
+git clone https://github.com/TheHappyCat/NumericToolsPHP.git
+cd NumericToolsPHP
+```
+
+2. Install dependencies:
+```bash
+composer install
+```
+
+## Quick Start
 
 ```php
 <?php
@@ -133,3 +161,76 @@ $b = Integer::createByString("1234567890");
 // false
 $comparison = $a->greaterOrEqualTo($b);
 ```
+
+## Advanced Usage Examples
+
+### Working with Extremely Large Numbers
+
+```php
+<?php
+
+// Calculate factorial of large numbers
+function factorial($n) {
+    $result = Integer::createByString('1');
+    for ($i = 2; $i <= $n; $i++) {
+        $result = $result->multiplyBy(Integer::createByString((string)$i));
+    }
+    return $result;
+}
+
+// Calculate 100! (factorial of 100)
+$factorial100 = factorial(100);
+echo $factorial100->toString(); // Outputs a very long number
+```
+
+### Mathematical Series
+
+```php
+<?php
+
+// Calculate sum of first n natural numbers
+function sumOfNaturalNumbers($n) {
+    $sum = Integer::createByString('0');
+    for ($i = 1; $i <= $n; $i++) {
+        $sum = $sum->add(Integer::createByString((string)$i));
+    }
+    return $sum;
+}
+
+$sum = sumOfNaturalNumbers(1000000);
+echo $sum->toString();
+```
+
+## Testing
+
+Run the test suite to ensure everything works correctly:
+
+```bash
+# Run all tests
+./vendor/bin/phpunit
+
+# Run with coverage report
+./vendor/bin/phpunit --coverage-html coverage/
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new functionality
+5. Ensure all tests pass
+6. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Author
+
+**Jean Paul Ruiz** - [jpruiz114@gmail.com](mailto:jpruiz114@gmail.com)
+
+## Acknowledgments
+
+- Inspired by the need to handle large numbers in PHP applications
+- Built with modern PHP practices and comprehensive testing
