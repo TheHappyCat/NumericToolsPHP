@@ -120,6 +120,44 @@ $divisor = Integer::createByString("9876543210");
 $module = $dividend->mod($divisor);
 ```
 
+### Prime Number Testing
+
+```php
+<?php
+
+// Check if a number is prime
+$number = Integer::createByString("1000000007");
+$isPrime = $number->isPrime(); // true
+
+// Probabilistic primality test (faster for large numbers)
+$largeNumber = Integer::createByString("123456789012345678901234567890123456789");
+$isProbablePrime = $largeNumber->isProbablePrime(10); // true/false with 99.9%+ accuracy
+
+// Test known composite numbers
+$composite = Integer::createByString("1000000008");
+$isComposite = !$composite->isPrime(); // true
+```
+
+### Number Theory Operations
+
+```php
+<?php
+
+// Greatest Common Divisor
+$a = Integer::createByString("48");
+$b = Integer::createByString("18");
+$gcd = $a->gcd($b); // 6
+
+// Least Common Multiple
+$lcm = $a->lcm($b); // 144
+
+// Modular Exponentiation (essential for cryptography)
+$base = Integer::createByString("2");
+$exponent = Integer::createByString("1000");
+$modulus = Integer::createByString("1000000007");
+$result = $base->modPow($exponent, $modulus); // 2^1000 mod 1000000007
+```
+
 ### Greater than
 
 ```php
