@@ -8,7 +8,7 @@ Just like the normal numeric operations you would usually do, but with numbers o
 
 ## Requirements
 
-- **PHP**: 8.0 or higher (tested with PHP 8.4)
+- **PHP**: 8.4 or higher
 - **Composer**: For dependency management
 
 ## Installation
@@ -118,6 +118,108 @@ $divisor = Integer::createByString("9876543210");
 
 // $module = 8626543209
 $module = $dividend->mod($divisor);
+```
+
+### Prime Number Testing
+
+```php
+<?php
+
+// Check if a number is prime
+$number = Integer::createByString("1000000007");
+$isPrime = $number->isPrime(); // true
+
+// Probabilistic primality test (faster for large numbers)
+$largeNumber = Integer::createByString("123456789012345678901234567890123456789");
+$isProbablePrime = $largeNumber->isProbablePrime(10); // true/false with 99.9%+ accuracy
+
+// Test known composite numbers
+$composite = Integer::createByString("1000000008");
+$isComposite = !$composite->isPrime(); // true
+```
+
+### Number Theory Operations
+
+```php
+<?php
+
+// Greatest Common Divisor
+$a = Integer::createByString("48");
+$b = Integer::createByString("18");
+$gcd = $a->gcd($b); // 6
+
+// Least Common Multiple
+$lcm = $a->lcm($b); // 144
+
+// Modular Exponentiation (essential for cryptography)
+$base = Integer::createByString("2");
+$exponent = Integer::createByString("1000");
+$modulus = Integer::createByString("1000000007");
+$result = $base->modPow($exponent, $modulus); // 2^1000 mod 1000000007
+
+// Square Root (integer part)
+$sqrt = Integer::createByString("100")->sqrt(); // 10
+
+// Power of 2 check
+$isPowerOfTwo = Integer::createByString("64")->isPowerOfTwo(); // true
+```
+
+### Prime Number Generation
+
+```php
+<?php
+
+use TheHappyCat\NumericTools\PrimeGenerator;
+
+$generator = new PrimeGenerator();
+
+// Generate a 256-bit prime number
+$prime = $generator->generatePrime(256);
+
+// Generate twin primes (p, p+2 where both are prime)
+list($p1, $p2) = $generator->generateTwinPrimes(128);
+
+// Find the next prime after a given number
+$nextPrime = $generator->generateNextPrime(Integer::createByString("1000"));
+
+// Find all primes in a range
+$primes = $generator->generatePrimesInRange(
+    Integer::createByString("100"), 
+    Integer::createByString("200")
+);
+
+// Generate Sophie Germain prime (p where 2p+1 is also prime)
+$sophiePrime = $generator->generateSophieGermainPrime(64);
+
+// Generate random prime in a range
+$randomPrime = $generator->generateRandomPrimeInRange(
+    Integer::createByString("1000"), 
+    Integer::createByString("10000")
+);
+```
+
+### Command Line Interface
+
+The library includes a powerful CLI for prime number operations:
+
+```bash
+# Generate a 256-bit prime
+php console/prime_generator.php generate 256
+
+# Test if a number is prime
+php console/prime_generator.php test 1000000007
+
+# Generate twin primes
+php console/prime_generator.php twin 128
+
+# Find primes in a range
+php console/prime_generator.php range 100 200
+
+# Generate Sophie Germain prime
+php console/prime_generator.php sophie 64
+
+# Run performance benchmark
+php console/prime_generator.php benchmark 128
 ```
 
 ### Greater than

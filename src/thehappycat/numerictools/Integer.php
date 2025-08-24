@@ -421,60 +421,324 @@ class Integer extends Number
             return Integer::createByInt(0);
         }
 
+        // If divisor is greater than dividend, result is 0
         if ($divisor->greaterThan($this)) {
-            throw new Exception(sprintf('Operation currently not supported: %s > %s', $divisor, $this));
+            if ($modMode) {
+                return $this; // Remainder is the dividend itself
+            }
+            return Integer::createByInt(0); // Quotient is 0
         }
 
-        $stringResult = '';
-        $currentIndex = 0;
+        // Optimized long division algorithm
+        $dividend = $this->getStringValue();
+        $divisorStr = $divisor->getStringValue();
+        
+        $quotient = '';
+        $remainder = '';
+        $dividendLength = strlen($dividend);
+        
+        for ($i = 0; $i < $dividendLength; $i++) {
+            $remainder .= $dividend[$i];
+            $remainder = ltrim($remainder, '0');
+            if (empty($remainder)) $remainder = '0';
+            
+            // Find how many times divisor goes into current remainder
+            $count = 0;
+            $tempDivisor = Integer::createByString($divisorStr);
+            $tempRemainder = Integer::createByString($remainder);
+            
+            while ($tempRemainder->greaterOrEqualTo($tempDivisor)) {
+                $tempRemainder = $tempRemainder->subtract($tempDivisor);
+                $count++;
+            }
+            
+            $quotient .= $count;
+            $remainder = $tempRemainder->getStringValue();
+        }
+        
+        $quotient = ltrim($quotient, '0');
+        if (empty($quotient)) $quotient = '0';
+        
+        if ($modMode) {
+            return Integer::createByString($remainder);
+        }
+        
+        return Integer::createByString($quotient);
+    }
 
-        $currentSelection = Integer::createByString(
-            implode('', array_slice($this->value, $currentIndex, $divisor->getLength()))
-        );
-
-        if (!$currentSelection->greaterOrEqualTo($divisor)) {
-            $currentSelection = Integer::createByString(
-                implode('', array_slice($this->value, $currentIndex, $divisor->getLength() + 1))
-            );
-
-            $currentIndex = $divisor->getLength() + 1;
-        } else {
-            $currentIndex = $divisor->getLength();
+    /**
+     * Fast modular exponentiation (a^b mod m)
+     * Essential for primality testing
+     * 
+     * @param \TheHappyCat\NumericTools\Integer $exponent
+     * @param \TheHappyCat\NumericTools\Integer $modulus
+     * @return \TheHappyCat\NumericTools\Integer
+     * @throws Exception
+     */
+    public function modPow(Integer $exponent, Integer $modulus)
+    {
+        if ($modulus->isZero()) {
+            throw new Exception("Modulus cannot be zero");
         }
 
-        $maxMultiplier = $currentSelection->getMaximumMultiplier($divisor);
-        $stringResult .= $maxMultiplier->getStringValue();
-        $multiplication = $maxMultiplier->multiplyBy($divisor);
-        $remainder = $currentSelection->subtract($multiplication);
+        $result = Integer::createByInt(1);
+        $base = $this->mod($modulus);
+        $exp = $exponent;
 
-        while ($currentIndex < $this->getLength()) {
-            $currentSelection = Integer::createByString(
-                NumericStringUtils::purgeZeros(
-                    $remainder->getStringValue() . implode('', array_slice($this->value, $currentIndex, 1))
-                )
-            );
+        while (!$exp->isZero()) {
+            // If exponent is odd, multiply result with base
+            if ($exp->mod(Integer::createByInt(2))->getStringValue() === '1') {
+                $result = $result->multiplyBy($base)->mod($modulus);
+            }
+            
+            // Square the base
+            $base = $base->multiplyBy($base)->mod($modulus);
+            
+            // Divide exponent by 2
+            $exp = $exp->divideBy(Integer::createByInt(2));
+        }
 
-            if (!$currentSelection->greaterOrEqualTo($divisor)) {
-                $stringResult .= '0';
+        return $result;
+    }
 
-                $currentIndex++;
+    /**
+     * Greatest Common Divisor using Euclidean algorithm
+     * 
+     * @param \TheHappyCat\NumericTools\Integer $other
+     * @return \TheHappyCat\NumericTools\Integer
+     */
+    public function gcd(Integer $other)
+    {
+        $a = $this;
+        $b = $other;
 
-                $remainder = $currentSelection;
+        while (!$b->isZero()) {
+            $temp = $b;
+            $b = $a->mod($b);
+            $a = $temp;
+        }
+
+        return $a;
+    }
+
+    /**
+     * Least Common Multiple
+     * 
+     * @param \TheHappyCat\NumericTools\Integer $other
+     * @return \TheHappyCat\NumericTools\Integer
+     */
+    public function lcm(Integer $other)
+    {
+        if ($this->isZero() || $other->isZero()) {
+            return Integer::createByInt(0);
+        }
+
+        $gcd = $this->gcd($other);
+        $absProduct = $this->multiplyBy($other);
+        
+        return $absProduct->divideBy($gcd);
+    }
+
+    /**
+     * Miller-Rabin probabilistic primality test
+     * Fast primality testing for large numbers
+     * 
+     * @param int $iterations Number of test iterations (default: 5)
+     * @return bool
+     */
+    public function isProbablePrime(int $iterations = 5): bool
+    {
+        if ($this->isZero() || $this->getStringValue() === '1') {
+            return false;
+        }
+        
+        if ($this->getStringValue() === '2' || $this->getStringValue() === '3') {
+            return true;
+        }
+
+        // Check if even
+        if ($this->mod(Integer::createByInt(2))->isZero()) {
+            return false;
+        }
+
+        // Write n-1 as 2^r * d
+        $nMinusOne = $this->subtract(Integer::createByInt(1));
+        $r = 0;
+        $d = $nMinusOne;
+        
+        while ($d->mod(Integer::createByInt(2))->isZero()) {
+            $r++;
+            $d = $d->divideBy(Integer::createByInt(2));
+        }
+
+        // Test with small bases
+        $bases = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37];
+        
+        for ($i = 0; $i < $iterations && $i < count($bases); $i++) {
+            $base = Integer::createByInt($bases[$i]);
+            
+            if ($base->greaterOrEqualTo($this)) {
                 continue;
             }
-
-            $currentIndex++;
-
-            $maxMultiplier = $currentSelection->getMaximumMultiplier($divisor);
-            $stringResult .= $maxMultiplier->getStringValue();
-            $multiplication = $maxMultiplier->multiplyBy($divisor);
-            $remainder = $currentSelection->subtract($multiplication);
+            
+            if (!$this->millerRabinTest($base, $r, $d)) {
+                return false;
+            }
         }
 
-        if ($modMode) {
-            return $remainder;
-        }
+        return true;
+    }
 
-        return Integer::createByString($stringResult);
+    /**
+     * Helper method for Miller-Rabin test
+     * 
+     * @param \TheHappyCat\NumericTools\Integer $base
+     * @param int $r
+     * @param \TheHappyCat\NumericTools\Integer $d
+     * @return bool
+     */
+    private function millerRabinTest(Integer $base, int $r, Integer $d): bool
+    {
+        $x = $base->modPow($d, $this);
+        
+        if ($x->getStringValue() === '1' || $x->getStringValue() === $this->subtract(Integer::createByInt(1))->getStringValue()) {
+            return true;
+        }
+        
+        for ($i = 1; $i < $r; $i++) {
+            $x = $x->multiplyBy($x)->mod($this);
+            
+            if ($x->getStringValue() === $this->subtract(Integer::createByInt(1))->getStringValue()) {
+                return true;
+            }
+            
+            if ($x->getStringValue() === '1') {
+                return false;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
+     * Check if number is prime (deterministic for small numbers, probabilistic for large)
+     * 
+     * @return bool
+     */
+    public function isPrime(): bool
+    {
+        // Negative numbers are not prime
+        if ($this->isNegative()) {
+            return false;
+        }
+        
+        // For numbers < 2^64, use deterministic test
+        if ($this->getLength() <= 20) {
+            return $this->isProbablePrime(10);
+        }
+        
+        // For larger numbers, use probabilistic test
+        return $this->isProbablePrime(20);
+    }
+
+    /**
+     * Check if this number is less than or equal to another number
+     * 
+     * @param Integer $number
+     * @return bool
+     */
+    public function lessThanOrEqualTo(Integer $number): bool
+    {
+        return !$this->greaterThan($number);
+    }
+
+    /**
+     * Check if this number equals another number
+     * 
+     * @param Integer $number
+     * @return bool
+     */
+    public function equals(Integer $number): bool
+    {
+        return $this->getStringValue() === $number->getStringValue();
+    }
+
+    /**
+     * Calculate the square root of this number (integer part only)
+     * 
+     * @return Integer
+     */
+    public function sqrt(): Integer
+    {
+        if ($this->isNegative()) {
+            throw new Exception("Cannot calculate square root of negative number");
+        }
+        
+        if ($this->isZero() || $this->getStringValue() === '1') {
+            return $this;
+        }
+        
+        // Use binary search to find square root
+        $left = Integer::createByInt(1);
+        $right = $this;
+        $result = Integer::createByInt(1);
+        
+        while ($left->lessThanOrEqualTo($right)) {
+            $mid = $left->add($right)->divideBy(Integer::createByInt(2));
+            $square = $mid->multiplyBy($mid);
+            
+            if ($square->lessThanOrEqualTo($this)) {
+                $result = $mid;
+                $left = $mid->add(Integer::createByInt(1));
+            } else {
+                $right = $mid->subtract(Integer::createByInt(1));
+            }
+        }
+        
+        return $result;
+    }
+
+    /**
+     * Check if this number is a power of 2
+     * 
+     * @return bool
+     */
+    public function isPowerOfTwo(): bool
+    {
+        if ($this->isZero() || $this->isNegative()) {
+            return false;
+        }
+        
+        $n = $this;
+        while (!$n->isZero() && !$n->equals(Integer::createByInt(1))) {
+            if (!$n->mod(Integer::createByInt(2))->isZero()) {
+                return false;
+            }
+            $n = $n->divideBy(Integer::createByInt(2));
+        }
+        
+        return true;
+    }
+
+    /**
+     * Get the power of 2 if this number is a power of 2
+     * 
+     * @return Integer|null
+     */
+    public function getPowerOfTwo(): ?Integer
+    {
+        if (!$this->isPowerOfTwo()) {
+            return null;
+        }
+        
+        $power = Integer::createByInt(0);
+        $n = $this;
+        
+        while (!$n->equals(Integer::createByInt(1))) {
+            $power = $power->add(Integer::createByInt(1));
+            $n = $n->divideBy(Integer::createByInt(2));
+        }
+        
+        return $power;
     }
 }
