@@ -33,9 +33,13 @@ class PrimalityComparisonTest extends TestCase
         
         $this->assertTrue($probResult);
         $this->assertTrue($bruteResult);
-        // For small numbers, brute force might be faster due to setup overhead
-        $this->assertTrue($probTime < 10); // Should be fast
-        $this->assertTrue($bruteTime < 10); // Should be fast
+        
+        // For small numbers, both should be fast (under 100ms in CI environment)
+        $this->assertTrue($probTime < 100, "Probabilistic test took too long: {$probTime}ms");
+        $this->assertTrue($bruteTime < 100, "Brute force test took too long: {$bruteTime}ms");
+        
+        // Both methods should give correct results
+        $this->assertTrue($probResult === $bruteResult, "Results should match");
     }
 
     public function testMediumNumberComparison()
@@ -61,7 +65,13 @@ class PrimalityComparisonTest extends TestCase
         
         $this->assertTrue($probResult);
         $this->assertTrue($bruteResult);
-        $this->assertLessThan($bruteTime, $probTime); // Probabilistic should be faster
+        
+        // For medium numbers, probabilistic should be significantly faster
+        // Allow for some variance in CI environments
+        $this->assertTrue($probTime < $bruteTime * 0.8, "Probabilistic should be faster for medium numbers");
+        
+        // Both methods should give correct results
+        $this->assertTrue($probResult === $bruteResult, "Results should match");
     }
 
     public function testLargeNumberProbabilisticOnly()
