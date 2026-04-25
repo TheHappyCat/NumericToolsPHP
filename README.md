@@ -42,9 +42,9 @@ The image uses **PHP 8.5** and **Composer**; install [Docker](https://docs.docke
 **Build and run (default: PHPUnit via `composer test`)**
 
 ```bash
-docker build -t numerictools-php .
+docker build -t php-big-integer .
 
-docker run --rm numerictools-php
+docker run --rm -e XDEBUG_MODE=off php-big-integer
 ```
 
 **Lock file**
@@ -64,11 +64,17 @@ docker run --rm -v "$(pwd):/app" -w /app php:8.5-cli-bookworm bash -c \
 
 ```bash
 # Shell in the container
-docker run --rm -it numerictools-php sh
+docker run --rm -it -e XDEBUG_MODE=off php-big-integer sh
 
 # HTML coverage under ./coverage on the host
-docker run --rm -v "$(pwd)/coverage:/app/coverage" numerictools-php \
+docker run --rm -e XDEBUG_MODE=coverage -v "$(pwd)/coverage:/app/coverage" php-big-integer \
   ./vendor/bin/phpunit --coverage-html coverage/
+```
+
+For CPU-heavy commands like prime generation, keep Xdebug off for better performance:
+
+```bash
+docker run --rm -e XDEBUG_MODE=off php-big-integer php console/prime_generator.php generate 256
 ```
 
 ## Quick start

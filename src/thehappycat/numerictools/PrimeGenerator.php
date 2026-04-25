@@ -52,10 +52,21 @@ class PrimeGenerator
             $binary = '1' . substr($binary, 1);
         }
         
-        // Convert binary to decimal string
-        $decimal = base_convert($binary, 2, 10);
-        
-        return Integer::createByString($decimal);
+        // Convert binary to Integer without base_convert().
+        // base_convert() loses correctness for long values and can produce invalid strings.
+        $value = Integer::createByInt(0);
+        $two = Integer::createByInt(2);
+        $one = Integer::createByInt(1);
+
+        for ($i = 0, $length = strlen($binary); $i < $length; $i++) {
+            $value = $value->multiplyBy($two);
+
+            if ($binary[$i] === '1') {
+                $value = $value->add($one);
+            }
+        }
+
+        return $value;
     }
     
     /**
