@@ -1,4 +1,6 @@
-<?php namespace TheHappyCat\NumericTools;
+<?php
+
+namespace TheHappyCat\NumericTools;
 
 use Exception;
 

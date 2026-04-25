@@ -1,4 +1,6 @@
-<?php namespace TheHappyCat\NumericTools\operators\subtraction;
+<?php
+
+namespace TheHappyCat\NumericTools\Operators\Subtraction;
 
 use Exception;
 
@@ -7,7 +9,7 @@ use TheHappyCat\NumericTools\Number;
 
 /**
  * Class IntegerSubtraction
- * @package TheHappyCat\NumericTools\operators\subtraction
+ * @package TheHappyCat\NumericTools\Operators\Subtraction
  */
 class IntegerSubtraction implements SubtractionInterface
 {

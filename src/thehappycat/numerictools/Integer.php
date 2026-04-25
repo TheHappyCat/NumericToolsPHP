@@ -1,4 +1,6 @@
-<?php namespace TheHappyCat\NumericTools;
+<?php
+
+namespace TheHappyCat\NumericTools;
 
 use Exception;
 
@@ -112,7 +114,7 @@ class Integer extends Number
      */
     public function isZero()
     {
-        if (sizeof($this->value) === 1) {
+        if (count($this->value) === 1) {
             if ($this->value[0] === 0) {
                 return true;
             }
@@ -179,7 +181,7 @@ class Integer extends Number
     public function greaterThan(Integer $number)
     {
         if (!empty($number)) {
-            $comparison = sizeof($this->value) <=> sizeof($number->value);
+            $comparison = count($this->value) <=> count($number->value);
 
             // if the length of both numbers is the same
             if ($comparison === 0) {
@@ -200,7 +202,7 @@ class Integer extends Number
 
                 // both numbers have the same length, they are not equal and their first digit is equal
 
-                $numberLength = sizeof($this->value);
+                $numberLength = count($this->value);
 
                 for ($i = 1; $i < $numberLength; $i++) {
                     $a0 = $this->value[$i - 1];
@@ -260,13 +262,13 @@ class Integer extends Number
         $top = $thisGreaterOrEqual ? $this->value : $number->value;
         $bottom = $thisGreaterOrEqual ? $number->value : $this->value;
 
-        $indexDiff = sizeof($top) - sizeof($bottom);
+        $indexDiff = count($top) - count($bottom);
 
         $carry = 0;
 
         $stringHolder = '';
 
-        for ($i = sizeof($top) - 1; $i >= 0; $i--) {
+        for ($i = count($top) - 1; $i >= 0; $i--) {
             $currentTop = $top[$i];
 
             if (($i - $indexDiff) < 0) {
@@ -299,15 +301,15 @@ class Integer extends Number
      */
     public function multiplyBy(Integer $number)
     {
-        $comparison = sizeof($this->value) <=> sizeof($number->value);
+        $comparison = count($this->value) <=> count($number->value);
 
         $top = $comparison === 0 ? $this : ($comparison === -1 ? $number : $this);
         $bottom = $comparison === 0 ? $number->value : ($comparison === -1 ? $this->value : $number->value);
 
         $result = Integer::createByInt(0);
 
-        for ($i = sizeof($bottom) - 1; $i >= 0; $i--) {
-            $delta = sizeof($bottom) - 1 - $i;
+        for ($i = count($bottom) - 1; $i >= 0; $i--) {
+            $delta = count($bottom) - 1 - $i;
 
             $subResult = $top->multiplyByInt($bottom[$i]);
 
@@ -336,7 +338,7 @@ class Integer extends Number
 
         $carry = 0;
 
-        for ($i = sizeof($this->value) - 1; $i >= 0; $i--) {
+        for ($i = count($this->value) - 1; $i >= 0; $i--) {
             $intResult = ($number * $this->value[$i]) + $carry;
 
             $stringResult = (string) $intResult;

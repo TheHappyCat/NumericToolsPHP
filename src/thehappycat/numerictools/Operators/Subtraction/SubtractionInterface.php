@@ -1,4 +1,6 @@
-<?php namespace TheHappyCat\NumericTools\Operators\Subtraction;
+<?php
+
+namespace TheHappyCat\NumericTools\Operators\Subtraction;
 
 use TheHappyCat\NumericTools\Number;
 

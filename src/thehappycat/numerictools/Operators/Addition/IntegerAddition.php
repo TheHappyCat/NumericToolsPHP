@@ -1,4 +1,6 @@
-<?php namespace TheHappyCat\NumericTools\Operators\Addition;
+<?php
+
+namespace TheHappyCat\NumericTools\Operators\Addition;
 
 use Exception;
 
@@ -19,18 +21,18 @@ class IntegerAddition implements AdditionInterface
      */
     public function add(Number $a, Number $b)
     {
-        $comparison = sizeof($a->value) <=> sizeof($b->value);
+        $comparison = count($a->value) <=> count($b->value);
 
         $top = $comparison === 0 ? $a->value : ($comparison === -1 ? $b->value : $a->value);
         $bottom = $comparison === 0 ? $b->value : ($comparison === -1 ? $a->value : $b->value);
 
-        $indexDiff = sizeof($top) - sizeof($bottom);
+        $indexDiff = count($top) - count($bottom);
 
         $stringHolder = '';
 
         $carry = 0;
 
-        for ($i = sizeof($top) - 1; $i >= 0; $i--) {
+        for ($i = count($top) - 1; $i >= 0; $i--) {
             $intResult = ($i - $indexDiff) < 0 ? ($top[$i] + $carry) : ($top[$i] + $bottom[$i - $indexDiff] + $carry);
 
             $stringResult = (string) $intResult;

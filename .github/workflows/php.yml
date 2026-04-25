@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   test:
-    name: PHP 8.4 Tests
+    name: PHP 8.5 Tests
     
     runs-on: ubuntu-latest
     
@@ -19,10 +19,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Setup PHP 8.4
+    - name: Setup PHP 8.5
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.4'
+        php-version: '8.5'
         extensions: mbstring, xml, ctype, json, tokenizer
         coverage: xdebug
 
@@ -34,9 +34,9 @@ jobs:
       uses: actions/cache@v3
       with:
         path: vendor
-        key: ${{ runner.os }}-php-8.4-${{ hashFiles('**/composer.json') }}
+        key: ${{ runner.os }}-php-8.5-${{ hashFiles('**/composer.json') }}
         restore-keys: |
-          ${{ runner.os }}-php-8.4-
+          ${{ runner.os }}-php-8.5-
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
