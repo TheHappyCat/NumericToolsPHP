@@ -1,4 +1,4 @@
-![alt text](https://raw.githubusercontent.com/TheHappyCat/NumericTools/master/assets/mathematical.gif "Mathematical")
+![NumericTools](https://raw.githubusercontent.com/TheHappyCat/NumericTools/master/assets/mathematical.gif "Mathematical")
 
 # *NumericToolsPHP* [![Total Downloads](https://poser.pugx.org/thehappycat/numerictools/downloads)](https://packagist.org/packages/thehappycat/numerictools) [![License](https://poser.pugx.org/thehappycat/numerictools/license)](https://packagist.org/packages/thehappycat/numerictools)
 
@@ -8,34 +8,77 @@ Just like the normal numeric operations you would usually do, but with numbers o
 
 ## Requirements
 
-- **PHP**: 8.4 or higher
-- **Composer**: For dependency management
+- **PHP:** 8.5, matching `composer.json` (`"php": "^8.5"`) and the `Dockerfile` image (`php:8.5-cli-bookworm`). The `^8.5` range allows compatible 8.x versions; it does not allow PHP 9.0 until you change that requirement.
+- **Composer:** for installing dependencies when developing the library or running tests locally.
+- **Docker (optional):** to build the image described under [Docker](#docker) instead of using a local PHP install.
 
 ## Installation
 
-### Via Composer (Recommended)
+### Via Composer (recommended)
 
 ```bash
 composer require thehappycat/numerictools
 ```
 
-### Manual Installation
+### Manual installation
 
 1. Clone this repository:
+
+   ```bash
+   git clone https://github.com/TheHappyCat/NumericToolsPHP.git
+   cd NumericToolsPHP
+   ```
+
+2. Install dependencies (runtime and **dev** dependencies such as PHPUnit):
+
+   ```bash
+   composer install
+   ```
+
+## Docker
+
+The image uses **PHP 8.5** and **Composer**; install [Docker](https://docs.docker.com/get-docker/) locally. From the **repository root**:
+
+**Build and run (default: PHPUnit via `composer test`)**
+
 ```bash
-git clone https://github.com/TheHappyCat/NumericToolsPHP.git
-cd NumericToolsPHP
+docker build -t numerictools-php .
+
+docker run --rm numerictools-php
 ```
 
-2. Install dependencies:
+**Lock file**
+
+`docker build` runs `composer install` using `composer.json` and `composer.lock`. If you change PHP or dev dependencies in `composer.json`, run `composer update` (or the relevant `composer require`) so `composer.lock` matches, commit the lock file, then rebuild. The same applies if the build fails with *lock file is not up to date* or a package *does not satisfy your constraint*.
+
+**Refresh the lock file without local Composer** (writes `composer.lock` and `vendor/` into your project directory)
+
 ```bash
-composer install
+docker run --rm -v "$(pwd):/app" -w /app php:8.5-cli-bookworm bash -c \
+  'apt-get update -qq && apt-get install -y --no-install-recommends curl unzip git -qq \
+   && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+   && composer update --no-interaction --prefer-dist'
 ```
 
-## Quick Start
+**Other commands**
+
+```bash
+# Shell in the container
+docker run --rm -it numerictools-php sh
+
+# HTML coverage under ./coverage on the host
+docker run --rm -v "$(pwd)/coverage:/app/coverage" numerictools-php \
+  ./vendor/bin/phpunit --coverage-html coverage/
+```
+
+## Quick start
+
+After `composer require thehappycat/numerictools` (or this repository’s `composer install`), the `Integer` class is available in the `TheHappyCat\NumericTools` namespace.
 
 ```php
 <?php
+
+use TheHappyCat\NumericTools\Integer;
 
 $integerNumber = Integer::createByInt(1);
 
@@ -43,10 +86,12 @@ $smallNumber = Integer::createByString('1');
 $largeNumber = Integer::createByString('987654321234567898765432123456789');
 
 // A really large number that as primitive type might throw a number in scientific notation or infinity.
-$reallyLargeNumber = Integer::createByString('12345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321');
+$reallyLargeNumber = Integer::createByString('12345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321234567898765432123456789876543212345678987654321');
 ```
 
-## Operations currently supported
+The **Operations** and **Advanced usage** examples use `Integer` the same way. Add `use TheHappyCat\NumericTools\Integer;` at the top of your file (or use the fully qualified class name).
+
+## Operations
 
 ### Addition
 
@@ -120,7 +165,7 @@ $divisor = Integer::createByString("9876543210");
 $module = $dividend->mod($divisor);
 ```
 
-### Prime Number Testing
+### Prime number testing
 
 ```php
 <?php
@@ -138,7 +183,7 @@ $composite = Integer::createByString("1000000008");
 $isComposite = !$composite->isPrime(); // true
 ```
 
-### Number Theory Operations
+### Number theory
 
 ```php
 <?php
@@ -164,7 +209,7 @@ $sqrt = Integer::createByString("100")->sqrt(); // 10
 $isPowerOfTwo = Integer::createByString("64")->isPowerOfTwo(); // true
 ```
 
-### Prime Number Generation
+### Prime number generation
 
 ```php
 <?php
@@ -184,7 +229,7 @@ $nextPrime = $generator->generateNextPrime(Integer::createByString("1000"));
 
 // Find all primes in a range
 $primes = $generator->generatePrimesInRange(
-    Integer::createByString("100"), 
+    Integer::createByString("100"),
     Integer::createByString("200")
 );
 
@@ -193,14 +238,14 @@ $sophiePrime = $generator->generateSophieGermainPrime(64);
 
 // Generate random prime in a range
 $randomPrime = $generator->generateRandomPrimeInRange(
-    Integer::createByString("1000"), 
+    Integer::createByString("1000"),
     Integer::createByString("10000")
 );
 ```
 
-### Command Line Interface
+### Command line interface
 
-The library includes a powerful CLI for prime number operations:
+From the **repository root** after `composer install` (the script loads `vendor/autoload.php`):
 
 ```bash
 # Generate a 256-bit prime
@@ -264,9 +309,9 @@ $b = Integer::createByString("1234567890");
 $comparison = $a->greaterOrEqualTo($b);
 ```
 
-## Advanced Usage Examples
+## Advanced usage
 
-### Working with Extremely Large Numbers
+### Working with extremely large numbers
 
 ```php
 <?php
@@ -285,7 +330,7 @@ $factorial100 = factorial(100);
 echo $factorial100->toString(); // Outputs a very long number
 ```
 
-### Mathematical Series
+### Mathematical series
 
 ```php
 <?php
@@ -305,34 +350,45 @@ echo $sum->toString();
 
 ## Testing
 
-Run the test suite to ensure everything works correctly:
+From the project root, after `composer install`:
+
+**Composer scripts (from `composer.json`)**
 
 ```bash
-# Run all tests
-./vendor/bin/phpunit
+composer test
+composer test:coverage   # HTML report under coverage/
+```
 
-# Run with coverage report
+**Direct `phpunit` invocations**
+
+```bash
+./vendor/bin/phpunit
 ./vendor/bin/phpunit --coverage-html coverage/
 ```
 
+**CI and Docker**
+
+- **Docker:** the image default is `composer test` (`php vendor/bin/phpunit` with `phpunit.xml`).
+- **CI:** `.github/workflows/php.yml` runs `vendor/bin/phpunit` with Clover output for Codecov.
+
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Ensure all tests pass
-6. Submit a pull request
+1. Fork the repository.
+2. Create a feature branch.
+3. Make your changes.
+4. Add tests for new functionality.
+5. Ensure all tests pass.
+6. Submit a pull request.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
 ## Author
 
-**Jean Paul Ruiz** - [jpruiz114@gmail.com](mailto:jpruiz114@gmail.com)
+**Jean Paul Ruiz** — [jpruiz114@gmail.com](mailto:jpruiz114@gmail.com)
 
 ## Acknowledgments
 
-- Inspired by the need to handle large numbers in PHP applications
-- Built with modern PHP practices and comprehensive testing
+- Inspired by the need to handle large numbers in PHP applications.
+- Built with modern PHP practices and comprehensive testing.

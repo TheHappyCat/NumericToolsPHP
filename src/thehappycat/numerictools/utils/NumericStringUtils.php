@@ -1,4 +1,6 @@
-<?php namespace TheHappyCat\NumericTools\Utils;
+<?php
+
+namespace TheHappyCat\NumericTools\Utils;
 
 /**
  * Class NumericStringUtils

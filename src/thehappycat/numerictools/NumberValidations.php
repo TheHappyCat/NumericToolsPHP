@@ -1,4 +1,6 @@
-<?php namespace TheHappyCat\NumericTools;
+<?php
+
+namespace TheHappyCat\NumericTools;
 
 /**
  * Class NumberValidations
@@ -14,7 +16,7 @@ class NumberValidations
      * An integer is a number that can be written without a fractional component.
      * For example, 21, 4, 0, and -2048 are integers, while 9.75,  5 1⁄2, and √2 are not.
      *
-     * @param string $value
+     * @param string $string
      * @return bool
      */
     public static function stringIsInteger(string $string)
@@ -30,22 +32,22 @@ class NumberValidations
             array_shift($chars);
             
             // After removing minus, must have at least one digit
-            if (sizeof($chars) === 0) {
+            if (count($chars) === 0) {
                 return false;
             }
             
             // Reject -0
-            if (sizeof($chars) === 1 && $chars[0] === '0') {
+            if (count($chars) === 1 && $chars[0] === '0') {
                 return false;
             }
             
             // If more than one digit, first digit can't be zero
-            if (sizeof($chars) > 1 && $chars[0] === '0') {
+            if (count($chars) > 1 && $chars[0] === '0') {
                 return false;
             }
         } else {
             // For positive numbers, if more than one digit, first digit can't be zero
-            if (sizeof($chars) > 1 && $chars[0] === '0') {
+            if (count($chars) > 1 && $chars[0] === '0') {
                 return false;
             }
         }
