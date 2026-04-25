@@ -10,9 +10,13 @@ RUN apt-get update \
         unzip \
     && rm -rf /var/lib/apt/lists/*
 
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
 WORKDIR /app
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV XDEBUG_MODE=coverage
 
 COPY composer.json composer.lock ./
 
