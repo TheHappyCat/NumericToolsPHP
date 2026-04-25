@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="NumericToolsPHP">
-    <description>Code style rules for NumericToolsPHP.</description>
+<ruleset name="php-big-integer">
+    <description>Code style rules for php-big-integer.</description>
 
     <arg name="basepath" value="."/>
     <arg name="extensions" value="php"/>

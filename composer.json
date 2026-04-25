@@ -1,9 +1,9 @@
 {
-    "name": "thehappycat/numerictools",
+    "name": "jpruiz114/php-big-integer",
     "type": "project",
     "license": "MIT",
-    "description": "PHP project to perform basic numeric operations",
-    "keywords": ["numeric tools", "large numbers", "arithmetic operations", "large numbers php", "php math"],
+    "description": "Arbitrary-precision integer arithmetic library for PHP",
+    "keywords": ["big integer", "arbitrary precision", "php math", "number theory", "large numbers"],
     "authors": [
         {
             "name": "Jean Paul Ruiz",

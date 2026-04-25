@@ -17,7 +17,7 @@ Just like the normal numeric operations you would usually do, but with numbers o
 ### Via Composer (recommended)
 
 ```bash
-composer require thehappycat/numerictools
+composer require jpruiz114/php-big-integer
 ```
 
 ### Manual installation
@@ -79,7 +79,7 @@ docker run --rm -e XDEBUG_MODE=off php-big-integer php console/prime_generator.p
 
 ## Quick start
 
-After `composer require thehappycat/numerictools` (or this repository’s `composer install`), the `Integer` class is available in the `TheHappyCat\NumericTools` namespace.
+After `composer require jpruiz114/php-big-integer` (or this repository’s `composer install`), the `Integer` class is available in the `TheHappyCat\NumericTools` namespace.
 
 ```php
 <?php
