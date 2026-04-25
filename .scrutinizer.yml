@@ -1,0 +1,14 @@
+build:
+  environment:
+    php:
+      version: 8.5
+
+  nodes:
+    analysis:
+      project_setup:
+        override:
+          - composer install --no-interaction --prefer-dist
+      tests:
+        override:
+          - command: vendor/bin/phpcs --standard=phpcs.xml
+            use_website_config: false
