@@ -1,6 +1,6 @@
 ![NumericTools](https://raw.githubusercontent.com/TheHappyCat/NumericTools/master/assets/mathematical.gif "Mathematical")
 
-# *NumericToolsPHP* [![Total Downloads](https://poser.pugx.org/thehappycat/numerictools/downloads)](https://packagist.org/packages/thehappycat/numerictools) [![License](https://poser.pugx.org/thehappycat/numerictools/license)](https://packagist.org/packages/thehappycat/numerictools)
+# *NumericToolsPHP* [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## A simple project created to handle large numeric operations in PHP!
 
