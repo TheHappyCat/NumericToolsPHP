@@ -1,6 +1,6 @@
-![NumericTools](https://raw.githubusercontent.com/TheHappyCat/NumericTools/master/assets/mathematical.gif "Mathematical")
+![php-big-integer](https://raw.githubusercontent.com/jpruiz114/php-big-integer/master/assets/mathematical.gif "Mathematical")
 
-# *NumericToolsPHP* [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+# *php-big-integer* [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## A simple project created to handle large numeric operations in PHP!
 
@@ -25,8 +25,8 @@ composer require thehappycat/numerictools
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/TheHappyCat/NumericToolsPHP.git
-   cd NumericToolsPHP
+   git clone https://github.com/jpruiz114/php-big-integer.git
+   cd php-big-integer
    ```
 
 2. Install dependencies (runtime and **dev** dependencies such as PHPUnit):
